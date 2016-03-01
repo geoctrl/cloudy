@@ -1,8 +1,9 @@
 module.exports = function() {
 	"ngInject";
 
-	let homeCtrl = function(forecastSvc) {
-		forecastSvc.getLocation('2044 E 800 S Spanish Fork, UT');
+	let homeCtrl = function(forecastSvc, mapsSvc) {
+		//forecastSvc.getLocation('2044 E 800 S Spanish Fork, UT');
+
 	};
 
 	let template = `
