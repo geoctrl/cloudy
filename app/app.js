@@ -4,7 +4,7 @@ require('./sass/main.scss');
 // require vendor dependencies
 let angular = require('angular');
 require('angular-ui-router');
-require('svg-icons');
+require('svg-icons-weather');
 require('./components/angular-ui-bootstrap/ui-bootstrap-custom-tpls-0.13.4');
 require('angular-local-storage');
 
@@ -12,7 +12,7 @@ require('angular-local-storage');
 let app = angular.module('cloudyApp', [
 	'ui.router',
 	'ui.bootstrap',
-	'svg-icons',
+	'svg-icons-weather',
 	'LocalStorageModule'
 ]);
 

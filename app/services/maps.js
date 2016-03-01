@@ -1,9 +1,7 @@
 import GoogleMapsLoader from 'google-maps';
+GoogleMapsLoader.KEY = 'AIzaSyA0REJoe7rWwdU-PiMin-xPpiJCyYRjQdI';
 
 module.exports = function() {
-	// google maps defaults
-	GoogleMapsLoader.KEY = 'AIzaSyA0REJoe7rWwdU-PiMin-xPpiJCyYRjQdI';
-
 	GoogleMapsLoader.load(google => {
 		let geocoder = new google.maps.Geocoder();
 

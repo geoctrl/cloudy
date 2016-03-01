@@ -7,6 +7,8 @@ var envSettings = new webpack.DefinePlugin({
 	__PROD__: process.env.NODE_ENV === 'production'
 });
 
+var includePaths = [/app/];
+
 var config = {
 	entry: {
 		app: path.resolve(__dirname, 'app', 'app.js')
@@ -20,12 +22,12 @@ var config = {
 			{
 				test: /\.js$/,
 				loader: 'ng-annotate!babel?presets[]=es2015',
-				exclude: [/node_modules/, /lib/]
+				include: includePaths
 			},
 			{
 				test: /\.json$/,
 				loader: 'json',
-				exclude: [/node_modules/, /lib/]
+				include: includePaths
 			},
 			{
 				test: require.resolve('angular'),
@@ -34,12 +36,12 @@ var config = {
 			{
 				test: /.html$/,
 				loader: 'raw',
-				exclude: [/node_modules/, /lib/]
+				include: includePaths
 			},
 			{
 				test: /.scss$/,
 				loader: 'style!css!postcss-loader!sass',
-				exclude: [/node_modules/, /lib/]
+				include: includePaths
 			}
 		]
 	},

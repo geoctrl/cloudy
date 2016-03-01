@@ -1,0 +1,25 @@
+.header {
+	height: 100px;
+	border-bottom: solid 2px #d3d3d3;
+	padding: 0 20px;
+	overflow: hidden;
+}
+
+.header__logo {
+	margin-top: 20px;
+	float: left;
+
+	svg.icon {
+		width: 60px;
+		height: 60px;
+		fill: #a3a3a3;
+	}
+}
+
+.header__app-name {
+	color: #a3a3a3;
+	float: left;
+	line-height: 106px;
+	margin-left: 12px;
+	font-size: 30px;
+}
