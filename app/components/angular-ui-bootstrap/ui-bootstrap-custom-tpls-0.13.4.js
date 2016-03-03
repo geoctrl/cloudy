@@ -2,6 +2,818 @@
  * angular-ui-bootstrap
  * http://angular-ui.github.io/bootstrap/
 
- * Version: 1.0.3 - 2016-01-11
+ * Version: 1.2.1 - 2016-02-27
  * License: MIT
- */angular.module("ui.bootstrap",["ui.bootstrap.tpls","ui.bootstrap.tooltip","ui.bootstrap.position","ui.bootstrap.stackedMap","ui.bootstrap.modal"]),angular.module("ui.bootstrap.tpls",["uib/template/tooltip/tooltip-html-popup.html","uib/template/tooltip/tooltip-popup.html","uib/template/tooltip/tooltip-template-popup.html","uib/template/modal/backdrop.html","uib/template/modal/window.html"]),angular.module("ui.bootstrap.tooltip",["ui.bootstrap.position","ui.bootstrap.stackedMap"]).provider("$uibTooltip",function(){function t(t){var e=/[A-Z]/g,o="-";return t.replace(e,function(t,e){return(e?o:"")+t.toLowerCase()})}var e={placement:"top",placementClassPrefix:"",animation:!0,popupDelay:0,popupCloseDelay:0,useContentExp:!1},o={mouseenter:"mouseleave",click:"click",outsideClick:"outsideClick",focus:"blur",none:""},n={};this.options=function(t){angular.extend(n,t)},this.setTriggers=function(t){angular.extend(o,t)},this.$get=["$window","$compile","$timeout","$document","$uibPosition","$interpolate","$rootScope","$parse","$$stackedMap",function(i,a,l,r,s,p,u,c,d){function f(t){if(27===t.which){var e=m.top();e&&(e.value.close(),m.removeTop(),e=null)}}var m=d.createNew();return r.on("keypress",f),u.$on("$destroy",function(){r.off("keypress",f)}),function(i,u,d,f){function h(t){var e=(t||f.trigger||d).split(" "),n=e.map(function(t){return o[t]||t});return{show:e,hide:n}}f=angular.extend({},e,n,f);var g=t(i),v=p.startSymbol(),b=p.endSymbol(),w="<div "+g+'-popup title="'+v+"title"+b+'" '+(f.useContentExp?'content-exp="contentExp()" ':'content="'+v+"content"+b+'" ')+'placement="'+v+"placement"+b+'" popup-class="'+v+"popupClass"+b+'" animation="animation" is-open="isOpen"origin-scope="origScope" style="visibility: hidden; display: block; top: -9999px; left: -9999px;"></div>';return{compile:function(){var t=a(w);return function(e,o,n){function a(){A.isOpen?d():p()}function p(){(!L||e.$eval(n[u+"Enable"]))&&(w(),y(),A.popupDelay?M||(M=l(g,A.popupDelay,!1)):g())}function d(){v(),A.popupCloseDelay?N||(N=l(b,A.popupCloseDelay,!1)):b()}function g(){return v(),w(),A.content?($(),void A.$evalAsync(function(){A.isOpen=!0,k(!0),H()})):angular.noop}function v(){M&&(l.cancel(M),M=null),R&&(l.cancel(R),R=null)}function b(){A&&A.$evalAsync(function(){A.isOpen=!1,k(!1),A.animation?P||(P=l(C,150,!1)):C()})}function w(){N&&(l.cancel(N),N=null),P&&(l.cancel(P),P=null)}function $(){O||(D=A.$new(),O=t(D,function(t){I?r.find("body").append(t):o.after(t)}),T())}function C(){v(),w(),E(),O&&(O.remove(),O=null),D&&(D.$destroy(),D=null)}function y(){A.title=n[u+"Title"],A.content=W?W(e):n[i],A.popupClass=n[u+"Class"],A.placement=angular.isDefined(n[u+"Placement"])?n[u+"Placement"]:f.placement;var t=parseInt(n[u+"PopupDelay"],10),o=parseInt(n[u+"PopupCloseDelay"],10);A.popupDelay=isNaN(t)?f.popupDelay:t,A.popupCloseDelay=isNaN(o)?f.popupCloseDelay:o}function k(t){q&&angular.isFunction(q.assign)&&q.assign(e,t)}function T(){B.length=0,W?(B.push(e.$watch(W,function(t){A.content=t,!t&&A.isOpen&&b()})),B.push(D.$watch(function(){U||(U=!0,D.$$postDigest(function(){U=!1,A&&A.isOpen&&H()}))}))):B.push(n.$observe(i,function(t){A.content=t,!t&&A.isOpen?b():H()})),B.push(n.$observe(u+"Title",function(t){A.title=t,A.isOpen&&H()})),B.push(n.$observe(u+"Placement",function(t){A.placement=t?t:f.placement,A.isOpen&&H()}))}function E(){B.length&&(angular.forEach(B,function(t){t()}),B.length=0)}function S(t){A&&A.isOpen&&O&&(o[0].contains(t.target)||O[0].contains(t.target)||d())}function x(){var t=n[u+"Trigger"];z(),F=h(t),"none"!==F.show&&F.show.forEach(function(t,e){"outsideClick"===t?(o.on("click",a),r.on("click",S)):t===F.hide[e]?o.on(t,a):t&&(o.on(t,p),o.on(F.hide[e],d)),o.on("keypress",function(t){27===t.which&&d()})})}var O,D,P,M,N,R,I=angular.isDefined(f.appendToBody)?f.appendToBody:!1,F=h(void 0),L=angular.isDefined(n[u+"Enable"]),A=e.$new(!0),U=!1,q=angular.isDefined(n[u+"IsOpen"])?c(n[u+"IsOpen"]):!1,W=f.useContentExp?c(n[i]):!1,B=[],H=function(){O&&O.html()&&(R||(R=l(function(){O.css({top:0,left:0});var t=s.positionElements(o,O,A.placement,I);O.css({top:t.top+"px",left:t.left+"px",visibility:"visible"}),f.placementClassPrefix&&O.removeClass("top bottom left right"),O.removeClass(f.placementClassPrefix+"top "+f.placementClassPrefix+"top-left "+f.placementClassPrefix+"top-right "+f.placementClassPrefix+"bottom "+f.placementClassPrefix+"bottom-left "+f.placementClassPrefix+"bottom-right "+f.placementClassPrefix+"left "+f.placementClassPrefix+"left-top "+f.placementClassPrefix+"left-bottom "+f.placementClassPrefix+"right "+f.placementClassPrefix+"right-top "+f.placementClassPrefix+"right-bottom");var e=t.placement.split("-");O.addClass(e[0],f.placementClassPrefix+t.placement),s.positionArrow(O,t.placement),R=null},0,!1)))};A.origScope=e,A.isOpen=!1,m.add(A,{close:b}),A.contentExp=function(){return A.content},n.$observe("disabled",function(t){t&&v(),t&&A.isOpen&&b()}),q&&e.$watch(q,function(t){A&&!t===A.isOpen&&a()});var z=function(){F.show.forEach(function(t){"outsideClick"===t?o.off("click",a):(o.off(t,p),o.off(t,a))}),F.hide.forEach(function(t){"outsideClick"===t?r.off("click",S):o.off(t,d)})};x();var j=e.$eval(n[u+"Animation"]);A.animation=angular.isDefined(j)?!!j:f.animation;var _,G=u+"AppendToBody";_=G in n&&void 0===n[G]?!0:e.$eval(n[G]),I=angular.isDefined(_)?_:I,I&&e.$on("$locationChangeSuccess",function(){A.isOpen&&b()}),e.$on("$destroy",function(){z(),C(),m.remove(A),A=null})}}}}}]}).directive("uibTooltipTemplateTransclude",["$animate","$sce","$compile","$templateRequest",function(t,e,o,n){return{link:function(i,a,l){var r,s,p,u=i.$eval(l.tooltipTemplateTranscludeScope),c=0,d=function(){s&&(s.remove(),s=null),r&&(r.$destroy(),r=null),p&&(t.leave(p).then(function(){s=null}),s=p,p=null)};i.$watch(e.parseAsResourceUrl(l.uibTooltipTemplateTransclude),function(e){var l=++c;e?(n(e,!0).then(function(n){if(l===c){var i=u.$new(),s=n,f=o(s)(i,function(e){d(),t.enter(e,a)});r=i,p=f,r.$emit("$includeContentLoaded",e)}},function(){l===c&&(d(),i.$emit("$includeContentError",e))}),i.$emit("$includeContentRequested",e)):d()}),i.$on("$destroy",d)}}}]).directive("uibTooltipClasses",["$uibPosition",function(t){return{restrict:"A",link:function(e,o,n){if(e.placement){var i=t.parsePlacement(e.placement);o.addClass(i[0])}else o.addClass("top");e.popupClass&&o.addClass(e.popupClass),e.animation()&&o.addClass(n.tooltipAnimationClass)}}}]).directive("uibTooltipPopup",function(){return{replace:!0,scope:{content:"@",placement:"@",popupClass:"@",animation:"&",isOpen:"&"},templateUrl:"uib/template/tooltip/tooltip-popup.html"}}).directive("uibTooltip",["$uibTooltip",function(t){return t("uibTooltip","tooltip","mouseenter")}]).directive("uibTooltipTemplatePopup",function(){return{replace:!0,scope:{contentExp:"&",placement:"@",popupClass:"@",animation:"&",isOpen:"&",originScope:"&"},templateUrl:"uib/template/tooltip/tooltip-template-popup.html"}}).directive("uibTooltipTemplate",["$uibTooltip",function(t){return t("uibTooltipTemplate","tooltip","mouseenter",{useContentExp:!0})}]).directive("uibTooltipHtmlPopup",function(){return{replace:!0,scope:{contentExp:"&",placement:"@",popupClass:"@",animation:"&",isOpen:"&"},templateUrl:"uib/template/tooltip/tooltip-html-popup.html"}}).directive("uibTooltipHtml",["$uibTooltip",function(t){return t("uibTooltipHtml","tooltip","mouseenter",{useContentExp:!0})}]),angular.module("ui.bootstrap.position",[]).factory("$uibPosition",["$document","$window",function(t,e){var o,n={normal:/(auto|scroll)/,hidden:/(auto|scroll|hidden)/},i={auto:/\s?auto?\s?/i,primary:/^(top|bottom|left|right)$/,secondary:/^(top|bottom|left|right|center)$/,vertical:/^(top|bottom)$/};return{getRawNode:function(t){return t[0]||t},parseStyle:function(t){return t=parseFloat(t),isFinite(t)?t:0},offsetParent:function(o){function n(t){return"static"===(e.getComputedStyle(t).position||"static")}o=this.getRawNode(o);for(var i=o.offsetParent||t[0].documentElement;i&&i!==t[0].documentElement&&n(i);)i=i.offsetParent;return i||t[0].documentElement},scrollbarWidth:function(){if(angular.isUndefined(o)){var e=angular.element('<div style="position: absolute; top: -9999px; width: 50px; height: 50px; overflow: scroll;"></div>');t.find("body").append(e),o=e[0].offsetWidth-e[0].clientWidth,o=isFinite(o)?o:0,e.remove()}return o},scrollParent:function(o,i){o=this.getRawNode(o);var a=i?n.hidden:n.normal,l=t[0].documentElement,r=e.getComputedStyle(o),s="absolute"===r.position,p=o.parentElement||l;if(p===l||"fixed"===r.position)return l;for(;p.parentElement&&p!==l;){var u=e.getComputedStyle(p);if(s&&"static"!==u.position&&(s=!1),!s&&a.test(u.overflow+u.overflowY+u.overflowX))break;p=p.parentElement}return p},position:function(o,n){o=this.getRawNode(o);var i=this.offset(o);if(n){var a=e.getComputedStyle(o);i.top-=this.parseStyle(a.marginTop),i.left-=this.parseStyle(a.marginLeft)}var l=this.offsetParent(o),r={top:0,left:0};return l!==t[0].documentElement&&(r=this.offset(l),r.top+=l.clientTop-l.scrollTop,r.left+=l.clientLeft-l.scrollLeft),{width:Math.round(angular.isNumber(i.width)?i.width:o.offsetWidth),height:Math.round(angular.isNumber(i.height)?i.height:o.offsetHeight),top:Math.round(i.top-r.top),left:Math.round(i.left-r.left)}},offset:function(o){o=this.getRawNode(o);var n=o.getBoundingClientRect();return{width:Math.round(angular.isNumber(n.width)?n.width:o.offsetWidth),height:Math.round(angular.isNumber(n.height)?n.height:o.offsetHeight),top:Math.round(n.top+(e.pageYOffset||t[0].documentElement.scrollTop)),left:Math.round(n.left+(e.pageXOffset||t[0].documentElement.scrollLeft))}},viewportOffset:function(o,n,i){o=this.getRawNode(o),i=i!==!1?!0:!1;var a=o.getBoundingClientRect(),l={top:0,left:0,bottom:0,right:0},r=n?t[0].documentElement:this.scrollParent(o),s=r.getBoundingClientRect();if(l.top=s.top+r.clientTop,l.left=s.left+r.clientLeft,r===t[0].documentElement&&(l.top+=e.pageYOffset,l.left+=e.pageXOffset),l.bottom=l.top+r.clientHeight,l.right=l.left+r.clientWidth,i){var p=e.getComputedStyle(r);l.top+=this.parseStyle(p.paddingTop),l.bottom-=this.parseStyle(p.paddingBottom),l.left+=this.parseStyle(p.paddingLeft),l.right-=this.parseStyle(p.paddingRight)}return{top:Math.round(a.top-l.top),bottom:Math.round(l.bottom-a.bottom),left:Math.round(a.left-l.left),right:Math.round(l.right-a.right)}},parsePlacement:function(t){var e=i.auto.test(t);return e&&(t=t.replace(i.auto,"")),t=t.split("-"),t[0]=t[0]||"top",i.primary.test(t[0])||(t[0]="top"),t[1]=t[1]||"center",i.secondary.test(t[1])||(t[1]="center"),t[2]=e?!0:!1,t},positionElements:function(t,o,n,a){t=this.getRawNode(t),o=this.getRawNode(o);var l=angular.isDefined(o.offsetWidth)?o.offsetWidth:o.prop("offsetWidth"),r=angular.isDefined(o.offsetHeight)?o.offsetHeight:o.prop("offsetHeight");n=this.parsePlacement(n);var s=a?this.offset(t):this.position(t),p={top:0,left:0,placement:""};if(n[2]){var u=this.viewportOffset(t),c=e.getComputedStyle(o),d={width:l+Math.round(Math.abs(this.parseStyle(c.marginLeft)+this.parseStyle(c.marginRight))),height:r+Math.round(Math.abs(this.parseStyle(c.marginTop)+this.parseStyle(c.marginBottom)))};if(n[0]="top"===n[0]&&d.height>u.top&&d.height<=u.bottom?"bottom":"bottom"===n[0]&&d.height>u.bottom&&d.height<=u.top?"top":"left"===n[0]&&d.width>u.left&&d.width<=u.right?"right":"right"===n[0]&&d.width>u.right&&d.width<=u.left?"left":n[0],n[1]="top"===n[1]&&d.height-s.height>u.bottom&&d.height-s.height<=u.top?"bottom":"bottom"===n[1]&&d.height-s.height>u.top&&d.height-s.height<=u.bottom?"top":"left"===n[1]&&d.width-s.width>u.right&&d.width-s.width<=u.left?"right":"right"===n[1]&&d.width-s.width>u.left&&d.width-s.width<=u.right?"left":n[1],"center"===n[1])if(i.vertical.test(n[0])){var f=s.width/2-l/2;u.left+f<0&&d.width-s.width<=u.right?n[1]="left":u.right+f<0&&d.width-s.width<=u.left&&(n[1]="right")}else{var m=s.height/2-d.height/2;u.top+m<0&&d.height-s.height<=u.bottom?n[1]="top":u.bottom+m<0&&d.height-s.height<=u.top&&(n[1]="bottom")}}switch(n[0]){case"top":p.top=s.top-r;break;case"bottom":p.top=s.top+s.height;break;case"left":p.left=s.left-l;break;case"right":p.left=s.left+s.width}switch(n[1]){case"top":p.top=s.top;break;case"bottom":p.top=s.top+s.height-r;break;case"left":p.left=s.left;break;case"right":p.left=s.left+s.width-l;break;case"center":i.vertical.test(n[0])?p.left=s.left+s.width/2-l/2:p.top=s.top+s.height/2-r/2}return p.top=Math.round(p.top),p.left=Math.round(p.left),p.placement="center"===n[1]?n[0]:n[0]+"-"+n[1],p},positionArrow:function(t,o){t=this.getRawNode(t);var n=!0,a=t.querySelector(".tooltip-inner");if(a||(n=!1,a=t.querySelector(".popover-inner")),a){var l=t.querySelector(n?".tooltip-arrow":".arrow");if(l){if(o=this.parsePlacement(o),"center"===o[1])return void angular.element(l).css({top:"",bottom:"",right:"",left:"",margin:""});var r="border-"+o[0]+"-width",s=e.getComputedStyle(l)[r],p="border-";p+=i.vertical.test(o[0])?o[0]+"-"+o[1]:o[1]+"-"+o[0],p+="-radius";var u=e.getComputedStyle(n?a:t)[p],c={top:"auto",bottom:"auto",left:"auto",right:"auto",margin:0};switch(o[0]){case"top":c.bottom=n?"0":"-"+s;break;case"bottom":c.top=n?"0":"-"+s;break;case"left":c.right=n?"0":"-"+s;break;case"right":c.left=n?"0":"-"+s}c[o[1]]=u,angular.element(l).css(c)}}}}}]),angular.module("ui.bootstrap.stackedMap",[]).factory("$$stackedMap",function(){return{createNew:function(){var t=[];return{add:function(e,o){t.push({key:e,value:o})},get:function(e){for(var o=0;o<t.length;o++)if(e===t[o].key)return t[o]},keys:function(){for(var e=[],o=0;o<t.length;o++)e.push(t[o].key);return e},top:function(){return t[t.length-1]},remove:function(e){for(var o=-1,n=0;n<t.length;n++)if(e===t[n].key){o=n;break}return t.splice(o,1)[0]},removeTop:function(){return t.splice(t.length-1,1)[0]},length:function(){return t.length}}}}}),angular.module("ui.bootstrap.modal",["ui.bootstrap.stackedMap"]).factory("$$multiMap",function(){return{createNew:function(){var t={};return{entries:function(){return Object.keys(t).map(function(e){return{key:e,value:t[e]}})},get:function(e){return t[e]},hasKey:function(e){return!!t[e]},keys:function(){return Object.keys(t)},put:function(e,o){t[e]||(t[e]=[]),t[e].push(o)},remove:function(e,o){var n=t[e];if(n){var i=n.indexOf(o);-1!==i&&n.splice(i,1),n.length||delete t[e]}}}}}}).provider("$uibResolve",function(){var t=this;this.resolver=null,this.setResolver=function(t){this.resolver=t},this.$get=["$injector","$q",function(e,o){var n=t.resolver?e.get(t.resolver):null;return{resolve:function(t,i,a,l){if(n)return n.resolve(t,i,a,l);var r=[];return angular.forEach(t,function(t){r.push(angular.isFunction(t)||angular.isArray(t)?o.resolve(e.invoke(t)):angular.isString(t)?o.resolve(e.get(t)):o.resolve(t))}),o.all(r).then(function(e){var o={},n=0;return angular.forEach(t,function(t,i){o[i]=e[n++]}),o})}}}]}).directive("uibModalBackdrop",["$animateCss","$injector","$uibModalStack",function(t,e,o){function n(e,n,i){i.modalInClass&&(t(n,{addClass:i.modalInClass}).start(),e.$on(o.NOW_CLOSING_EVENT,function(o,a){var l=a();e.modalOptions.animation?t(n,{removeClass:i.modalInClass}).start().then(l):l()}))}return{replace:!0,templateUrl:"uib/template/modal/backdrop.html",compile:function(t,e){return t.addClass(e.backdropClass),n}}}]).directive("uibModalWindow",["$uibModalStack","$q","$animate","$animateCss","$document",function(t,e,o,n,i){return{scope:{index:"@"},replace:!0,transclude:!0,templateUrl:function(t,e){return e.templateUrl||"uib/template/modal/window.html"},link:function(a,l,r){l.addClass(r.windowClass||""),l.addClass(r.windowTopClass||""),a.size=r.size,a.close=function(e){var o=t.getTop();o&&o.value.backdrop&&"static"!==o.value.backdrop&&e.target===e.currentTarget&&(e.preventDefault(),e.stopPropagation(),t.dismiss(o.key,"backdrop click"))},l.on("click",a.close),a.$isRendered=!0;var s=e.defer();r.$observe("modalRender",function(t){"true"===t&&s.resolve()}),s.promise.then(function(){var s=null;r.modalInClass&&(s=n(l,{addClass:r.modalInClass}).start(),a.$on(t.NOW_CLOSING_EVENT,function(t,e){var i=e();n?n(l,{removeClass:r.modalInClass}).start().then(i):o.removeClass(l,r.modalInClass).then(i)})),e.when(s).then(function(){if(!i[0].activeElement||!l[0].contains(i[0].activeElement)){var t=l[0].querySelector("[autofocus]");t?t.focus():l[0].focus()}});var p=t.getTop();p&&t.modalRendered(p.key)})}}}]).directive("uibModalAnimationClass",function(){return{compile:function(t,e){e.modalAnimation&&t.addClass(e.uibModalAnimationClass)}}}).directive("uibModalTransclude",function(){return{link:function(t,e,o,n,i){i(t.$parent,function(t){e.empty(),e.append(t)})}}}).factory("$uibModalStack",["$animate","$animateCss","$document","$compile","$rootScope","$q","$$multiMap","$$stackedMap",function(t,e,o,n,i,a,l,r){function s(){for(var t=-1,e=w.keys(),o=0;o<e.length;o++)w.get(e[o]).value.backdrop&&(t=o);return t}function p(t,e){var o=w.get(t).value,n=o.appendTo;w.remove(t),d(o.modalDomEl,o.modalScope,function(){var e=o.openedClass||b;$.remove(e,t),n.toggleClass(e,$.hasKey(e)),u(!0)}),c(),e&&e.focus?e.focus():n.focus&&n.focus()}function u(t){var e;w.length()>0&&(e=w.top().value,e.modalDomEl.toggleClass(e.windowTopClass||"",t))}function c(){if(h&&-1===s()){var t=g;d(h,g,function(){t=null}),h=void 0,g=void 0}}function d(t,o,n,i){function l(){l.done||(l.done=!0,e(t,{event:"leave"}).start().then(function(){t.remove(),i&&i.resolve()}),o.$destroy(),n&&n())}var r,s=null,p=function(){return r||(r=a.defer(),s=r.promise),function(){r.resolve()}};return o.$broadcast(C.NOW_CLOSING_EVENT,p),a.when(s).then(l)}function f(t){if(t.isDefaultPrevented())return t;var e=w.top();if(e)switch(t.which){case 27:e.value.keyboard&&(t.preventDefault(),i.$apply(function(){C.dismiss(e.key,"escape key press")}));break;case 9:C.loadFocusElementList(e);var o=!1;t.shiftKey?C.isFocusInFirstItem(t)&&(o=C.focusLastFocusableElement()):C.isFocusInLastItem(t)&&(o=C.focusFirstFocusableElement()),o&&(t.preventDefault(),t.stopPropagation())}}function m(t,e,o){return!t.value.modalScope.$broadcast("modal.closing",e,o).defaultPrevented}var h,g,v,b="modal-open",w=r.createNew(),$=l.createNew(),C={NOW_CLOSING_EVENT:"modal.stack.now-closing"},y=0,k="a[href], area[href], input:not([disabled]), button:not([disabled]),select:not([disabled]), textarea:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable=true]";return i.$watch(s,function(t){g&&(g.index=t)}),o.on("keydown",f),i.$on("$destroy",function(){o.off("keydown",f)}),C.open=function(e,a){var l=o[0].activeElement,r=a.openedClass||b;u(!1),w.add(e,{deferred:a.deferred,renderDeferred:a.renderDeferred,closedDeferred:a.closedDeferred,modalScope:a.scope,backdrop:a.backdrop,keyboard:a.keyboard,openedClass:a.openedClass,windowTopClass:a.windowTopClass,animation:a.animation,appendTo:a.appendTo}),$.put(r,e);var p=a.appendTo,c=s();if(!p.length)throw new Error("appendTo element not found. Make sure that the element passed is in DOM.");c>=0&&!h&&(g=i.$new(!0),g.modalOptions=a,g.index=c,h=angular.element('<div uib-modal-backdrop="modal-backdrop"></div>'),h.attr("backdrop-class",a.backdropClass),a.animation&&h.attr("modal-animation","true"),n(h)(g),t.enter(h,p));var d=angular.element('<div uib-modal-window="modal-window"></div>');d.attr({"template-url":a.windowTemplateUrl,"window-class":a.windowClass,"window-top-class":a.windowTopClass,size:a.size,index:w.length()-1,animate:"animate"}).html(a.content),a.animation&&d.attr("modal-animation","true"),t.enter(d,p).then(function(){n(d)(a.scope),t.addClass(p,r)}),w.top().value.modalDomEl=d,w.top().value.modalOpener=l,C.clearFocusListCache()},C.close=function(t,e){var o=w.get(t);return o&&m(o,e,!0)?(o.value.modalScope.$$uibDestructionScheduled=!0,o.value.deferred.resolve(e),p(t,o.value.modalOpener),!0):!o},C.dismiss=function(t,e){var o=w.get(t);return o&&m(o,e,!1)?(o.value.modalScope.$$uibDestructionScheduled=!0,o.value.deferred.reject(e),p(t,o.value.modalOpener),!0):!o},C.dismissAll=function(t){for(var e=this.getTop();e&&this.dismiss(e.key,t);)e=this.getTop()},C.getTop=function(){return w.top()},C.modalRendered=function(t){var e=w.get(t);e&&e.value.renderDeferred.resolve()},C.focusFirstFocusableElement=function(){return v.length>0?(v[0].focus(),!0):!1},C.focusLastFocusableElement=function(){return v.length>0?(v[v.length-1].focus(),!0):!1},C.isFocusInFirstItem=function(t){return v.length>0?(t.target||t.srcElement)===v[0]:!1},C.isFocusInLastItem=function(t){return v.length>0?(t.target||t.srcElement)===v[v.length-1]:!1},C.clearFocusListCache=function(){v=[],y=0},C.loadFocusElementList=function(t){if((void 0===v||!v.length)&&t){var e=t.value.modalDomEl;e&&e.length&&(v=e[0].querySelectorAll(k))}},C}]).provider("$uibModal",function(){var t={options:{animation:!0,backdrop:!0,keyboard:!0},$get:["$rootScope","$q","$document","$templateRequest","$controller","$uibResolve","$uibModalStack",function(e,o,n,i,a,l,r){function s(t){return t.template?o.when(t.template):i(angular.isFunction(t.templateUrl)?t.templateUrl():t.templateUrl)}var p={},u=null;return p.getPromiseChain=function(){return u},p.open=function(i){function p(){return v}var c=o.defer(),d=o.defer(),f=o.defer(),m=o.defer(),h={result:c.promise,opened:d.promise,closed:f.promise,rendered:m.promise,close:function(t){return r.close(h,t)},dismiss:function(t){return r.dismiss(h,t)}};if(i=angular.extend({},t.options,i),i.resolve=i.resolve||{},i.appendTo=i.appendTo||n.find("body").eq(0),!i.template&&!i.templateUrl)throw new Error("One of template or templateUrl options is required.");var g,v=o.all([s(i),l.resolve(i.resolve,{},null,null)]);return g=u=o.all([u]).then(p,p).then(function(t){var o=i.scope||e,n=o.$new();n.$close=h.close,n.$dismiss=h.dismiss,n.$on("$destroy",function(){n.$$uibDestructionScheduled||n.$dismiss("$uibUnscheduledDestruction")});var l,s={};i.controller&&(s.$scope=n,s.$uibModalInstance=h,angular.forEach(t[1],function(t,e){s[e]=t}),l=a(i.controller,s),i.controllerAs&&(i.bindToController&&(l.$close=n.$close,l.$dismiss=n.$dismiss,angular.extend(l,o)),n[i.controllerAs]=l)),r.open(h,{scope:n,deferred:c,renderDeferred:m,closedDeferred:f,content:t[0],animation:i.animation,backdrop:i.backdrop,keyboard:i.keyboard,backdropClass:i.backdropClass,windowTopClass:i.windowTopClass,windowClass:i.windowClass,windowTemplateUrl:i.windowTemplateUrl,size:i.size,openedClass:i.openedClass,appendTo:i.appendTo}),d.resolve(!0)},function(t){d.reject(t),c.reject(t)})["finally"](function(){u===g&&(u=null)}),h},p}]};return t}),angular.module("uib/template/tooltip/tooltip-html-popup.html",[]).run(["$templateCache",function(t){t.put("uib/template/tooltip/tooltip-html-popup.html",'<div class="tooltip"\n  tooltip-animation-class="fade"\n  uib-tooltip-classes\n  ng-class="{ in: isOpen() }">\n  <div class="tooltip-arrow"></div>\n  <div class="tooltip-inner" ng-bind-html="contentExp()"></div>\n</div>\n')}]),angular.module("template/tooltip/tooltip-html-unsafe-popup.html",[]).run(["$templateCache",function(t){t.put("template/tooltip/tooltip-html-unsafe-popup.html",'<div class="tooltip"\n  tooltip-animation-class="fade"\n  tooltip-classes\n  ng-class="{ in: isOpen() }">\n  <div class="tooltip-arrow"></div>\n  <div class="tooltip-inner" bind-html-unsafe="content"></div>\n</div>\n')}]),angular.module("uib/template/tooltip/tooltip-popup.html",[]).run(["$templateCache",function(t){t.put("uib/template/tooltip/tooltip-popup.html",'<div class="tooltip"\n  tooltip-animation-class="fade"\n  uib-tooltip-classes\n  ng-class="{ in: isOpen() }">\n  <div class="tooltip-arrow"></div>\n  <div class="tooltip-inner" ng-bind="content"></div>\n</div>\n')}]),angular.module("uib/template/tooltip/tooltip-template-popup.html",[]).run(["$templateCache",function(t){t.put("uib/template/tooltip/tooltip-template-popup.html",'<div class="tooltip"\n  tooltip-animation-class="fade"\n  uib-tooltip-classes\n  ng-class="{ in: isOpen() }">\n  <div class="tooltip-arrow"></div>\n  <div class="tooltip-inner"\n    uib-tooltip-template-transclude="contentExp()"\n    tooltip-template-transclude-scope="originScope()"></div>\n</div>\n')}]),angular.module("uib/template/modal/backdrop.html",[]).run(["$templateCache",function(t){t.put("uib/template/modal/backdrop.html",'<div class="modal-backdrop"\n     uib-modal-animation-class="fade"\n     modal-in-class="in"\n     ng-style="{\'z-index\': 1040 + (index && 1 || 0) + index*10}"\n></div>\n')}]),angular.module("uib/template/modal/window.html",[]).run(["$templateCache",function(t){t.put("uib/template/modal/window.html",'<div modal-render="{{$isRendered}}" tabindex="-1" role="dialog" class="modal"\n    uib-modal-animation-class="fade"\n    modal-in-class="in"\n    ng-style="{\'z-index\': 1050 + index*10, display: \'block\'}">\n    <div class="modal-dialog" ng-class="size ? \'modal-\' + size : \'\'"><div class="modal-content" uib-modal-transclude></div></div>\n</div>\n')}]);
+ */angular.module("ui.bootstrap", ["ui.bootstrap.tpls","ui.bootstrap.modal","ui.bootstrap.stackedMap"]);
+angular.module("ui.bootstrap.tpls", ["uib/template/modal/backdrop.html","uib/template/modal/window.html"]);
+angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
+		/**
+		 * A helper, internal data structure that stores all references attached to key
+		 */
+		.factory('$$multiMap', function() {
+			return {
+				createNew: function() {
+					var map = {};
+
+					return {
+						entries: function() {
+							return Object.keys(map).map(function(key) {
+								return {
+									key: key,
+									value: map[key]
+								};
+							});
+						},
+						get: function(key) {
+							return map[key];
+						},
+						hasKey: function(key) {
+							return !!map[key];
+						},
+						keys: function() {
+							return Object.keys(map);
+						},
+						put: function(key, value) {
+							if (!map[key]) {
+								map[key] = [];
+							}
+
+							map[key].push(value);
+						},
+						remove: function(key, value) {
+							var values = map[key];
+
+							if (!values) {
+								return;
+							}
+
+							var idx = values.indexOf(value);
+
+							if (idx !== -1) {
+								values.splice(idx, 1);
+							}
+
+							if (!values.length) {
+								delete map[key];
+							}
+						}
+					};
+				}
+			};
+		})
+
+		/**
+		 * Pluggable resolve mechanism for the modal resolve resolution
+		 * Supports UI Router's $resolve service
+		 */
+		.provider('$uibResolve', function() {
+			var resolve = this;
+			this.resolver = null;
+
+			this.setResolver = function(resolver) {
+				this.resolver = resolver;
+			};
+
+			this.$get = ['$injector', '$q', function($injector, $q) {
+				var resolver = resolve.resolver ? $injector.get(resolve.resolver) : null;
+				return {
+					resolve: function(invocables, locals, parent, self) {
+						if (resolver) {
+							return resolver.resolve(invocables, locals, parent, self);
+						}
+
+						var promises = [];
+
+						angular.forEach(invocables, function(value) {
+							if (angular.isFunction(value) || angular.isArray(value)) {
+								promises.push($q.resolve($injector.invoke(value)));
+							} else if (angular.isString(value)) {
+								promises.push($q.resolve($injector.get(value)));
+							} else {
+								promises.push($q.resolve(value));
+							}
+						});
+
+						return $q.all(promises).then(function(resolves) {
+							var resolveObj = {};
+							var resolveIter = 0;
+							angular.forEach(invocables, function(value, key) {
+								resolveObj[key] = resolves[resolveIter++];
+							});
+
+							return resolveObj;
+						});
+					}
+				};
+			}];
+		})
+
+		/**
+		 * A helper directive for the $modal service. It creates a backdrop element.
+		 */
+		.directive('uibModalBackdrop', ['$animateCss', '$injector', '$uibModalStack',
+			function($animateCss, $injector, $modalStack) {
+				return {
+					replace: true,
+					templateUrl: 'uib/template/modal/backdrop.html',
+					compile: function(tElement, tAttrs) {
+						tElement.addClass(tAttrs.backdropClass);
+						return linkFn;
+					}
+				};
+
+				function linkFn(scope, element, attrs) {
+					if (attrs.modalInClass) {
+						$animateCss(element, {
+							addClass: attrs.modalInClass
+						}).start();
+
+						scope.$on($modalStack.NOW_CLOSING_EVENT, function(e, setIsAsync) {
+							var done = setIsAsync();
+							if (scope.modalOptions.animation) {
+								$animateCss(element, {
+									removeClass: attrs.modalInClass
+								}).start().then(done);
+							} else {
+								done();
+							}
+						});
+					}
+				}
+			}])
+
+		.directive('uibModalWindow', ['$uibModalStack', '$q', '$animate', '$animateCss', '$document',
+			function($modalStack, $q, $animate, $animateCss, $document) {
+				return {
+					scope: {
+						index: '@'
+					},
+					replace: true,
+					transclude: true,
+					templateUrl: function(tElement, tAttrs) {
+						return tAttrs.templateUrl || 'uib/template/modal/window.html';
+					},
+					link: function(scope, element, attrs) {
+						element.addClass(attrs.windowClass || '');
+						element.addClass(attrs.windowTopClass || '');
+						scope.size = attrs.size;
+
+						scope.close = function(evt) {
+							var modal = $modalStack.getTop();
+							if (modal && modal.value.backdrop &&
+									modal.value.backdrop !== 'static' &&
+									evt.target === evt.currentTarget) {
+								evt.preventDefault();
+								evt.stopPropagation();
+								$modalStack.dismiss(modal.key, 'backdrop click');
+							}
+						};
+
+						// moved from template to fix issue #2280
+						element.on('click', scope.close);
+
+						// This property is only added to the scope for the purpose of detecting when this directive is rendered.
+						// We can detect that by using this property in the template associated with this directive and then use
+						// {@link Attribute#$observe} on it. For more details please see {@link TableColumnResize}.
+						scope.$isRendered = true;
+
+						// Deferred object that will be resolved when this modal is render.
+						var modalRenderDeferObj = $q.defer();
+						// Observe function will be called on next digest cycle after compilation, ensuring that the DOM is ready.
+						// In order to use this way of finding whether DOM is ready, we need to observe a scope property used in modal's template.
+						attrs.$observe('modalRender', function(value) {
+							if (value === 'true') {
+								modalRenderDeferObj.resolve();
+							}
+						});
+
+						modalRenderDeferObj.promise.then(function() {
+							var animationPromise = null;
+
+							if (attrs.modalInClass) {
+								animationPromise = $animateCss(element, {
+									addClass: attrs.modalInClass
+								}).start();
+
+								scope.$on($modalStack.NOW_CLOSING_EVENT, function(e, setIsAsync) {
+									var done = setIsAsync();
+									if ($animateCss) {
+										$animateCss(element, {
+											removeClass: attrs.modalInClass
+										}).start().then(done);
+									} else {
+										$animate.removeClass(element, attrs.modalInClass).then(done);
+									}
+								});
+							}
+
+
+							$q.when(animationPromise).then(function() {
+								// Notify {@link $modalStack} that modal is rendered.
+								var modal = $modalStack.getTop();
+								if (modal) {
+									$modalStack.modalRendered(modal.key);
+								}
+
+								/**
+								 * If something within the freshly-opened modal already has focus (perhaps via a
+								 * directive that causes focus). then no need to try and focus anything.
+								 */
+								if (!($document[0].activeElement && element[0].contains($document[0].activeElement))) {
+									var inputWithAutofocus = element[0].querySelector('[autofocus]');
+									/**
+									 * Auto-focusing of a freshly-opened modal element causes any child elements
+									 * with the autofocus attribute to lose focus. This is an issue on touch
+									 * based devices which will show and then hide the onscreen keyboard.
+									 * Attempts to refocus the autofocus element via JavaScript will not reopen
+									 * the onscreen keyboard. Fixed by updated the focusing logic to only autofocus
+									 * the modal element if the modal does not contain an autofocus element.
+									 */
+									if (inputWithAutofocus) {
+										inputWithAutofocus.focus();
+									} else {
+										element[0].focus();
+									}
+								}
+							});
+						});
+					}
+				};
+			}])
+
+		.directive('uibModalAnimationClass', function() {
+			return {
+				compile: function(tElement, tAttrs) {
+					if (tAttrs.modalAnimation) {
+						tElement.addClass(tAttrs.uibModalAnimationClass);
+					}
+				}
+			};
+		})
+
+		.directive('uibModalTransclude', function() {
+			return {
+				link: function(scope, element, attrs, controller, transclude) {
+					transclude(scope.$parent, function(clone) {
+						element.empty();
+						element.append(clone);
+					});
+				}
+			};
+		})
+
+		.factory('$uibModalStack', ['$animate', '$animateCss', '$document',
+			'$compile', '$rootScope', '$q', '$$multiMap', '$$stackedMap',
+			function($animate, $animateCss, $document, $compile, $rootScope, $q, $$multiMap, $$stackedMap) {
+				var OPENED_MODAL_CLASS = 'modal-open';
+
+				var backdropDomEl, backdropScope;
+				var openedWindows = $$stackedMap.createNew();
+				var openedClasses = $$multiMap.createNew();
+				var $modalStack = {
+					NOW_CLOSING_EVENT: 'modal.stack.now-closing'
+				};
+
+				//Modal focus behavior
+				var focusableElementList;
+				var focusIndex = 0;
+				var tababbleSelector = 'a[href], area[href], input:not([disabled]), ' +
+						'button:not([disabled]),select:not([disabled]), textarea:not([disabled]), ' +
+						'iframe, object, embed, *[tabindex], *[contenteditable=true]';
+
+				function backdropIndex() {
+					var topBackdropIndex = -1;
+					var opened = openedWindows.keys();
+					for (var i = 0; i < opened.length; i++) {
+						if (openedWindows.get(opened[i]).value.backdrop) {
+							topBackdropIndex = i;
+						}
+					}
+					return topBackdropIndex;
+				}
+
+				$rootScope.$watch(backdropIndex, function(newBackdropIndex) {
+					if (backdropScope) {
+						backdropScope.index = newBackdropIndex;
+					}
+				});
+
+				function removeModalWindow(modalInstance, elementToReceiveFocus) {
+					var modalWindow = openedWindows.get(modalInstance).value;
+					var appendToElement = modalWindow.appendTo;
+
+					//clean up the stack
+					openedWindows.remove(modalInstance);
+
+					removeAfterAnimate(modalWindow.modalDomEl, modalWindow.modalScope, function() {
+						var modalBodyClass = modalWindow.openedClass || OPENED_MODAL_CLASS;
+						openedClasses.remove(modalBodyClass, modalInstance);
+						appendToElement.toggleClass(modalBodyClass, openedClasses.hasKey(modalBodyClass));
+						toggleTopWindowClass(true);
+					}, modalWindow.closedDeferred);
+					checkRemoveBackdrop();
+
+					//move focus to specified element if available, or else to body
+					if (elementToReceiveFocus && elementToReceiveFocus.focus) {
+						elementToReceiveFocus.focus();
+					} else if (appendToElement.focus) {
+						appendToElement.focus();
+					}
+				}
+
+				// Add or remove "windowTopClass" from the top window in the stack
+				function toggleTopWindowClass(toggleSwitch) {
+					var modalWindow;
+
+					if (openedWindows.length() > 0) {
+						modalWindow = openedWindows.top().value;
+						modalWindow.modalDomEl.toggleClass(modalWindow.windowTopClass || '', toggleSwitch);
+					}
+				}
+
+				function checkRemoveBackdrop() {
+					//remove backdrop if no longer needed
+					if (backdropDomEl && backdropIndex() === -1) {
+						var backdropScopeRef = backdropScope;
+						removeAfterAnimate(backdropDomEl, backdropScope, function() {
+							backdropScopeRef = null;
+						});
+						backdropDomEl = undefined;
+						backdropScope = undefined;
+					}
+				}
+
+				function removeAfterAnimate(domEl, scope, done, closedDeferred) {
+					var asyncDeferred;
+					var asyncPromise = null;
+					var setIsAsync = function() {
+						if (!asyncDeferred) {
+							asyncDeferred = $q.defer();
+							asyncPromise = asyncDeferred.promise;
+						}
+
+						return function asyncDone() {
+							asyncDeferred.resolve();
+						};
+					};
+					scope.$broadcast($modalStack.NOW_CLOSING_EVENT, setIsAsync);
+
+					// Note that it's intentional that asyncPromise might be null.
+					// That's when setIsAsync has not been called during the
+					// NOW_CLOSING_EVENT broadcast.
+					return $q.when(asyncPromise).then(afterAnimating);
+
+					function afterAnimating() {
+						if (afterAnimating.done) {
+							return;
+						}
+						afterAnimating.done = true;
+
+						$animateCss(domEl, {
+							event: 'leave'
+						}).start().then(function() {
+							domEl.remove();
+							if (closedDeferred) {
+								closedDeferred.resolve();
+							}
+						});
+
+						scope.$destroy();
+						if (done) {
+							done();
+						}
+					}
+				}
+
+				$document.on('keydown', keydownListener);
+
+				$rootScope.$on('$destroy', function() {
+					$document.off('keydown', keydownListener);
+				});
+
+				function keydownListener(evt) {
+					if (evt.isDefaultPrevented()) {
+						return evt;
+					}
+
+					var modal = openedWindows.top();
+					if (modal) {
+						switch (evt.which) {
+							case 27: {
+								if (modal.value.keyboard) {
+									evt.preventDefault();
+									$rootScope.$apply(function() {
+										$modalStack.dismiss(modal.key, 'escape key press');
+									});
+								}
+								break;
+							}
+							case 9: {
+								$modalStack.loadFocusElementList(modal);
+								var focusChanged = false;
+								if (evt.shiftKey) {
+									if ($modalStack.isFocusInFirstItem(evt) || $modalStack.isModalFocused(evt, modal)) {
+										focusChanged = $modalStack.focusLastFocusableElement();
+									}
+								} else {
+									if ($modalStack.isFocusInLastItem(evt)) {
+										focusChanged = $modalStack.focusFirstFocusableElement();
+									}
+								}
+
+								if (focusChanged) {
+									evt.preventDefault();
+									evt.stopPropagation();
+								}
+								break;
+							}
+						}
+					}
+				}
+
+				$modalStack.open = function(modalInstance, modal) {
+					var modalOpener = $document[0].activeElement,
+							modalBodyClass = modal.openedClass || OPENED_MODAL_CLASS;
+
+					toggleTopWindowClass(false);
+
+					openedWindows.add(modalInstance, {
+						deferred: modal.deferred,
+						renderDeferred: modal.renderDeferred,
+						closedDeferred: modal.closedDeferred,
+						modalScope: modal.scope,
+						backdrop: modal.backdrop,
+						keyboard: modal.keyboard,
+						openedClass: modal.openedClass,
+						windowTopClass: modal.windowTopClass,
+						animation: modal.animation,
+						appendTo: modal.appendTo
+					});
+
+					openedClasses.put(modalBodyClass, modalInstance);
+
+					var appendToElement = modal.appendTo,
+							currBackdropIndex = backdropIndex();
+
+					if (!appendToElement.length) {
+						throw new Error('appendTo element not found. Make sure that the element passed is in DOM.');
+					}
+
+					if (currBackdropIndex >= 0 && !backdropDomEl) {
+						backdropScope = $rootScope.$new(true);
+						backdropScope.modalOptions = modal;
+						backdropScope.index = currBackdropIndex;
+						backdropDomEl = angular.element('<div uib-modal-backdrop="modal-backdrop"></div>');
+						backdropDomEl.attr('backdrop-class', modal.backdropClass);
+						if (modal.animation) {
+							backdropDomEl.attr('modal-animation', 'true');
+						}
+						$compile(backdropDomEl)(backdropScope);
+						$animate.enter(backdropDomEl, appendToElement);
+					}
+
+					var angularDomEl = angular.element('<div uib-modal-window="modal-window"></div>');
+					angularDomEl.attr({
+						'template-url': modal.windowTemplateUrl,
+						'window-class': modal.windowClass,
+						'window-top-class': modal.windowTopClass,
+						'size': modal.size,
+						'index': openedWindows.length() - 1,
+						'animate': 'animate'
+					}).html(modal.content);
+					if (modal.animation) {
+						angularDomEl.attr('modal-animation', 'true');
+					}
+
+					$animate.enter($compile(angularDomEl)(modal.scope), appendToElement)
+							.then(function() {
+								if (!modal.scope.$$uibDestructionScheduled) {
+									$animate.addClass(appendToElement, modalBodyClass);
+								}
+							});
+
+					openedWindows.top().value.modalDomEl = angularDomEl;
+					openedWindows.top().value.modalOpener = modalOpener;
+
+					$modalStack.clearFocusListCache();
+				};
+
+				function broadcastClosing(modalWindow, resultOrReason, closing) {
+					return !modalWindow.value.modalScope.$broadcast('modal.closing', resultOrReason, closing).defaultPrevented;
+				}
+
+				$modalStack.close = function(modalInstance, result) {
+					var modalWindow = openedWindows.get(modalInstance);
+					if (modalWindow && broadcastClosing(modalWindow, result, true)) {
+						modalWindow.value.modalScope.$$uibDestructionScheduled = true;
+						modalWindow.value.deferred.resolve(result);
+						removeModalWindow(modalInstance, modalWindow.value.modalOpener);
+						return true;
+					}
+					return !modalWindow;
+				};
+
+				$modalStack.dismiss = function(modalInstance, reason) {
+					var modalWindow = openedWindows.get(modalInstance);
+					if (modalWindow && broadcastClosing(modalWindow, reason, false)) {
+						modalWindow.value.modalScope.$$uibDestructionScheduled = true;
+						modalWindow.value.deferred.reject(reason);
+						removeModalWindow(modalInstance, modalWindow.value.modalOpener);
+						return true;
+					}
+					return !modalWindow;
+				};
+
+				$modalStack.dismissAll = function(reason) {
+					var topModal = this.getTop();
+					while (topModal && this.dismiss(topModal.key, reason)) {
+						topModal = this.getTop();
+					}
+				};
+
+				$modalStack.getTop = function() {
+					return openedWindows.top();
+				};
+
+				$modalStack.modalRendered = function(modalInstance) {
+					var modalWindow = openedWindows.get(modalInstance);
+					if (modalWindow) {
+						modalWindow.value.renderDeferred.resolve();
+					}
+				};
+
+				$modalStack.focusFirstFocusableElement = function() {
+					if (focusableElementList.length > 0) {
+						focusableElementList[0].focus();
+						return true;
+					}
+					return false;
+				};
+				$modalStack.focusLastFocusableElement = function() {
+					if (focusableElementList.length > 0) {
+						focusableElementList[focusableElementList.length - 1].focus();
+						return true;
+					}
+					return false;
+				};
+
+				$modalStack.isModalFocused = function(evt, modalWindow) {
+					if (evt && modalWindow) {
+						var modalDomEl = modalWindow.value.modalDomEl;
+						if (modalDomEl && modalDomEl.length) {
+							return (evt.target || evt.srcElement) === modalDomEl[0];
+						}
+					}
+					return false;
+				};
+
+				$modalStack.isFocusInFirstItem = function(evt) {
+					if (focusableElementList.length > 0) {
+						return (evt.target || evt.srcElement) === focusableElementList[0];
+					}
+					return false;
+				};
+
+				$modalStack.isFocusInLastItem = function(evt) {
+					if (focusableElementList.length > 0) {
+						return (evt.target || evt.srcElement) === focusableElementList[focusableElementList.length - 1];
+					}
+					return false;
+				};
+
+				$modalStack.clearFocusListCache = function() {
+					focusableElementList = [];
+					focusIndex = 0;
+				};
+
+				$modalStack.loadFocusElementList = function(modalWindow) {
+					if (focusableElementList === undefined || !focusableElementList.length) {
+						if (modalWindow) {
+							var modalDomE1 = modalWindow.value.modalDomEl;
+							if (modalDomE1 && modalDomE1.length) {
+								focusableElementList = modalDomE1[0].querySelectorAll(tababbleSelector);
+							}
+						}
+					}
+				};
+
+				return $modalStack;
+			}])
+
+		.provider('$uibModal', function() {
+			var $modalProvider = {
+				options: {
+					animation: true,
+					backdrop: true, //can also be false or 'static'
+					keyboard: true
+				},
+				$get: ['$rootScope', '$q', '$document', '$templateRequest', '$controller', '$uibResolve', '$uibModalStack',
+					function ($rootScope, $q, $document, $templateRequest, $controller, $uibResolve, $modalStack) {
+						var $modal = {};
+
+						function getTemplatePromise(options) {
+							return options.template ? $q.when(options.template) :
+									$templateRequest(angular.isFunction(options.templateUrl) ?
+											options.templateUrl() : options.templateUrl);
+						}
+
+						var promiseChain = null;
+						$modal.getPromiseChain = function() {
+							return promiseChain;
+						};
+
+						$modal.open = function(modalOptions) {
+							var modalResultDeferred = $q.defer();
+							var modalOpenedDeferred = $q.defer();
+							var modalClosedDeferred = $q.defer();
+							var modalRenderDeferred = $q.defer();
+
+							//prepare an instance of a modal to be injected into controllers and returned to a caller
+							var modalInstance = {
+								result: modalResultDeferred.promise,
+								opened: modalOpenedDeferred.promise,
+								closed: modalClosedDeferred.promise,
+								rendered: modalRenderDeferred.promise,
+								close: function (result) {
+									return $modalStack.close(modalInstance, result);
+								},
+								dismiss: function (reason) {
+									return $modalStack.dismiss(modalInstance, reason);
+								}
+							};
+
+							//merge and clean up options
+							modalOptions = angular.extend({}, $modalProvider.options, modalOptions);
+							modalOptions.resolve = modalOptions.resolve || {};
+							modalOptions.appendTo = modalOptions.appendTo || $document.find('body').eq(0);
+
+							//verify options
+							if (!modalOptions.template && !modalOptions.templateUrl) {
+								throw new Error('One of template or templateUrl options is required.');
+							}
+
+							var templateAndResolvePromise =
+									$q.all([getTemplatePromise(modalOptions), $uibResolve.resolve(modalOptions.resolve, {}, null, null)]);
+
+							function resolveWithTemplate() {
+								return templateAndResolvePromise;
+							}
+
+							// Wait for the resolution of the existing promise chain.
+							// Then switch to our own combined promise dependency (regardless of how the previous modal fared).
+							// Then add to $modalStack and resolve opened.
+							// Finally clean up the chain variable if no subsequent modal has overwritten it.
+							var samePromise;
+							samePromise = promiseChain = $q.all([promiseChain])
+									.then(resolveWithTemplate, resolveWithTemplate)
+									.then(function resolveSuccess(tplAndVars) {
+										var providedScope = modalOptions.scope || $rootScope;
+
+										var modalScope = providedScope.$new();
+										modalScope.$close = modalInstance.close;
+										modalScope.$dismiss = modalInstance.dismiss;
+
+										modalScope.$on('$destroy', function() {
+											if (!modalScope.$$uibDestructionScheduled) {
+												modalScope.$dismiss('$uibUnscheduledDestruction');
+											}
+										});
+
+										var ctrlInstance, ctrlLocals = {};
+
+										//controllers
+										if (modalOptions.controller) {
+											ctrlLocals.$scope = modalScope;
+											ctrlLocals.$uibModalInstance = modalInstance;
+											angular.forEach(tplAndVars[1], function(value, key) {
+												ctrlLocals[key] = value;
+											});
+
+											ctrlInstance = $controller(modalOptions.controller, ctrlLocals);
+											if (modalOptions.controllerAs) {
+												if (modalOptions.bindToController) {
+													ctrlInstance.$close = modalScope.$close;
+													ctrlInstance.$dismiss = modalScope.$dismiss;
+													angular.extend(ctrlInstance, providedScope);
+													if (angular.isFunction(ctrlInstance.$onInit)) {
+														ctrlInstance.$onInit();
+													}
+												}
+
+												modalScope[modalOptions.controllerAs] = ctrlInstance;
+											}
+										}
+
+										$modalStack.open(modalInstance, {
+											scope: modalScope,
+											deferred: modalResultDeferred,
+											renderDeferred: modalRenderDeferred,
+											closedDeferred: modalClosedDeferred,
+											content: tplAndVars[0],
+											animation: modalOptions.animation,
+											backdrop: modalOptions.backdrop,
+											keyboard: modalOptions.keyboard,
+											backdropClass: modalOptions.backdropClass,
+											windowTopClass: modalOptions.windowTopClass,
+											windowClass: modalOptions.windowClass,
+											windowTemplateUrl: modalOptions.windowTemplateUrl,
+											size: modalOptions.size,
+											openedClass: modalOptions.openedClass,
+											appendTo: modalOptions.appendTo
+										});
+										modalOpenedDeferred.resolve(true);
+
+									}, function resolveError(reason) {
+										modalOpenedDeferred.reject(reason);
+										modalResultDeferred.reject(reason);
+									})['finally'](function() {
+								if (promiseChain === samePromise) {
+									promiseChain = null;
+								}
+							});
+
+							return modalInstance;
+						};
+
+						return $modal;
+					}
+				]
+			};
+
+			return $modalProvider;
+		});
+
+angular.module('ui.bootstrap.stackedMap', [])
+		/**
+		 * A helper, internal data structure that acts as a map but also allows getting / removing
+		 * elements in the LIFO order
+		 */
+		.factory('$$stackedMap', function() {
+			return {
+				createNew: function() {
+					var stack = [];
+
+					return {
+						add: function(key, value) {
+							stack.push({
+								key: key,
+								value: value
+							});
+						},
+						get: function(key) {
+							for (var i = 0; i < stack.length; i++) {
+								if (key === stack[i].key) {
+									return stack[i];
+								}
+							}
+						},
+						keys: function() {
+							var keys = [];
+							for (var i = 0; i < stack.length; i++) {
+								keys.push(stack[i].key);
+							}
+							return keys;
+						},
+						top: function() {
+							return stack[stack.length - 1];
+						},
+						remove: function(key) {
+							var idx = -1;
+							for (var i = 0; i < stack.length; i++) {
+								if (key === stack[i].key) {
+									idx = i;
+									break;
+								}
+							}
+							return stack.splice(idx, 1)[0];
+						},
+						removeTop: function() {
+							return stack.splice(stack.length - 1, 1)[0];
+						},
+						length: function() {
+							return stack.length;
+						}
+					};
+				}
+			};
+		});
+angular.module("uib/template/modal/backdrop.html", []).run(["$templateCache", function($templateCache) {
+	$templateCache.put("uib/template/modal/backdrop.html",
+			"<div class=\"modal-backdrop\"\n" +
+			"     uib-modal-animation-class=\"fade\"\n" +
+			"     modal-in-class=\"in\"\n" +
+			"     ng-style=\"{'z-index': 1040 + (index && 1 || 0) + index*10}\"\n" +
+			"></div>\n" +
+			"");
+}]);
+
+angular.module("uib/template/modal/window.html", []).run(["$templateCache", function($templateCache) {
+	$templateCache.put("uib/template/modal/window.html",
+			"<div modal-render=\"{{$isRendered}}\" tabindex=\"-1\" role=\"dialog\" class=\"modal\"\n" +
+			"    uib-modal-animation-class=\"fade\"\n" +
+			"    modal-in-class=\"in\"\n" +
+			"    ng-style=\"{'z-index': 1050 + index*10, display: 'block'}\">\n" +
+			"    <div class=\"modal-dialog {{size ? 'modal-' + size : ''}}\"><div class=\"modal-content\" uib-modal-transclude></div></div>\n" +
+			"</div>\n" +
+			"");
+}]);
