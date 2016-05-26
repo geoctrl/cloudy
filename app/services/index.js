@@ -1,4 +1,5 @@
-module.exports = function(app) {
-	app.service('mapsSvc', require('./maps'));
-	app.service('forecastSvc', require('./forecast'));
+import googleMaps from './googleMaps';
+
+export default function(app) {
+	app.service('googleMaps', googleMaps);
 };

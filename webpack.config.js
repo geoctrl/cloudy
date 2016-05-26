@@ -1,18 +1,10 @@
 var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-
-var envSettings = new webpack.DefinePlugin({
-	__DEV__: (process.env.NODE_ENV === 'development' || !process.env.NODE_ENV),
-	__PROD__: process.env.NODE_ENV === 'production'
-});
-
-var includePaths = [/app/];
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var config = {
-	entry: {
-		app: path.resolve(__dirname, 'app', 'app.js')
-	},
+	entry: path.resolve(__dirname, 'app', 'app.js'),
 	output: {
 		path: path.resolve(__dirname, 'app'),
 		filename: 'bundle.js'
@@ -22,30 +14,42 @@ var config = {
 			{
 				test: /\.js$/,
 				loader: 'ng-annotate!babel?presets[]=es2015',
-				include: includePaths
+				exclude: [/node_modules/, /lib/]
 			},
 			{
 				test: /\.json$/,
 				loader: 'json',
-				include: includePaths
-			},
-			{
-				test: require.resolve('angular'),
-				loader: 'expose?angular'
+				exclude: [/node_modules/, /lib/]
 			},
 			{
 				test: /.html$/,
 				loader: 'raw',
-				include: includePaths
+				exclude: [/node_modules/, /lib/]
 			},
 			{
 				test: /.scss$/,
 				loader: 'style!css!postcss-loader!sass',
-				include: includePaths
+				exclude: [/node_modules/, /lib/]
+			},
+			{
+				test: /\.svg$/,
+				loader: 'svg-inline?removeTags=true&removingTags[]=style',
+				exclude: [/node_modules/, /lib/]
 			}
 		]
 	},
-	plugins: [envSettings],
+	plugins: [
+		new webpack.DefinePlugin({
+			__DEV__: (process.env.NODE_ENV === 'development' || !process.env.NODE_ENV),
+			__PROD__: process.env.NODE_ENV === 'production'
+		}),
+		new HtmlWebpackPlugin({
+			template: 'app/index.ejs',
+			appMountId: 'cloudy',
+			baseHref: process.env.NODE_ENV === 'production' ? '/' : '/'
+		})
+
+	],
 	postcss: function() {
 		return [require('autoprefixer')];
 	}
@@ -55,13 +59,10 @@ if (process.env.NODE_ENV === 'development') {
 
 }
 
-
 if (process.env.NODE_ENV === 'production') {
-	//config.entry.vendors = [];
 	config.output.path = path.resolve(__dirname, 'dist');
-	config.devtool = 'source-map';
+	// config.devtool = 'source-map';
 	config.plugins.push(new webpack.optimize.UglifyJsPlugin());
-	//config.plugins[0] = new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js');
 }
 
 module.exports = config;

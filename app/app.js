@@ -1,33 +1,32 @@
 // require app styles
-require('./sass/main.scss');
+import './sass/main.scss';
 
 // require vendor dependencies
-let angular = require('angular');
-require('angular-ui-router');
-require('svg-icons-weather');
-require('./components/angular-ui-bootstrap/ui-bootstrap-custom-tpls-0.13.4');
-require('angular-local-storage');
+import angular from 'angular';
+import 'angular-local-storage';
+import 'angular-ui-router';
 
-// init app
-let app = angular.module('cloudyApp', [
-	'ui.router',
-	'ui.bootstrap',
-	'svg-icons-weather',
-	'LocalStorageModule'
+// polyfill the Promise global
+import Promise from 'es6-promise';
+Promise.polyfill();
+
+var app = angular.module('cloudy', [
+
+  // vendor dependencies
+  'LocalStorageModule',
+  'ui.router'
+
 ]);
 
-// core app
-require('./core')(app);
-require('./services')(app);
+// app components
+import core from './core';
+import services from './services';
+import components from './components';
+import filters from './filters';
+import pages from './pages';
 
-// components and pages
-require('./components')(app);
-require('./home')(app);
-
-
-
-// core config
-app.config(function($locationProvider) {
-	"ngInject";
-	$locationProvider.html5Mode(true);
-});
+core(app);
+services(app);
+components(app);
+filters(app);
+pages(app);
