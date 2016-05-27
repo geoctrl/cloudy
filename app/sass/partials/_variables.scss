@@ -1,14 +1,14 @@
-$color-primary-700: #253a49;
-$color-primary-100: lighten($color-primary-700, 48%);
-$color-primary-200: lighten($color-primary-700, 40%);
-$color-primary-300: lighten($color-primary-700, 32%);
-$color-primary-400: lighten($color-primary-700, 24%);
-$color-primary-500: #416681;
-$color-primary-600: lighten($color-primary-700, 8%);
-$color-primary-800: darken($color-primary-700, 4%);
-$color-primary-900: darken($color-primary-700, 8%);
+$color-primary-500: #FA6900;
+$color-primary-100: lighten($color-primary-500, 48%);
+$color-primary-200: lighten($color-primary-500, 40%);
+$color-primary-300: lighten($color-primary-500, 32%);
+$color-primary-400: lighten($color-primary-500, 24%);
+$color-primary-600: lighten($color-primary-500, 8%);
+$color-primary-700: darken($color-primary-500, 16%);
+$color-primary-800: darken($color-primary-500, 4%);
+$color-primary-900: darken($color-primary-500, 8%);
 
-$color-accent-500: #EF6455;
+$color-accent-500: #69D2E7;
 $color-accent-100: lighten($color-accent-500, 32%);
 $color-accent-200: lighten($color-accent-500, 24%);
 $color-accent-300: lighten($color-accent-500, 16%);
@@ -18,7 +18,7 @@ $color-accent-700: darken($color-accent-500, 16%);
 $color-accent-800: darken($color-accent-500, 24%);
 $color-accent-900: darken($color-accent-500, 32%);
 
-$color-complement-500: #ffd44d;
+$color-complement-500: #E0E4CC;
 $color-complement-100: lighten($color-complement-500, 32%);
 $color-complement-200: lighten($color-complement-500, 24%);
 $color-complement-300: lighten($color-complement-500, 16%);

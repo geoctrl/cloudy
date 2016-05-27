@@ -1,0 +1,40 @@
+.saved-places {
+	flex-grow: 0;
+	width: 300px;
+	overflow: auto;
+}
+
+.place {
+	border-radius: $border-radius-base;
+	padding: 10px;
+	border: solid 1px transparent;
+	cursor: pointer;
+	height: 80px;
+
+	transition:	border 100ms ease;
+
+	.place__weather {
+		color: $color-accent-100;
+		font-size: 30px;
+		float: left;
+		margin-right: 20px;
+	}
+
+	.place__title {
+		font-size: 16px;
+		font-weight: 700;
+		color: $color-accent-100;
+	}
+
+	&:hover {
+		border-color: rgba(#fff, .5);
+	}
+
+	&.active {
+		background-color: #fff;
+
+		.place__title {
+			color: $color-primary-500;
+		}
+	}
+}

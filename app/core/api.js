@@ -1,18 +1,26 @@
 import axios from 'axios';
 
-let mockApi = '0.0.0.0:7001/api';
-let devApi = '/api';
-let prodApi = '/api';
+let mockApi = 'http://0.0.0.0:7001/v1';
+let devApi = '/v1';
+let prodApi = 'http://api.apixu.com/v1';
 let responseType = 'json';
 
+let apixuKey = '9d3e385ed0aa47c6a8455150162705';
+
 module.exports.prod = axios.create({
-	baseURL: __DEV__ ? devApi : prodApi,
-  responseType: responseType
+	baseURL: prodApi,
+  responseType: responseType,
+	params: {
+		key: apixuKey
+	}
 });
 
 module.exports.mock = axios.create({
 	baseURL: mockApi,
-  responseType: responseType
+  responseType: responseType,
+	params: {
+		key: apixuKey
+	}
 });
 
 /**

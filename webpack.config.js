@@ -3,6 +3,9 @@ var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
+var prodWeatherPath = './weather-icons/css/weather-icons.min.css';
+var devWeatherPath = './sass/weather-icons/css/weather-icons.min.css';
+
 var config = {
 	entry: path.resolve(__dirname, 'app', 'app.js'),
 	output: {
@@ -32,6 +35,10 @@ var config = {
 				exclude: [/node_modules/, /lib/]
 			},
 			{
+				test   : /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
+				loader : 'file-loader'
+			},
+			{
 				test: /\.svg$/,
 				loader: 'svg-inline?removeTags=true&removingTags[]=style',
 				exclude: [/node_modules/, /lib/]
@@ -46,7 +53,8 @@ var config = {
 		new HtmlWebpackPlugin({
 			template: 'app/index.ejs',
 			appMountId: 'cloudy',
-			baseHref: process.env.NODE_ENV === 'production' ? '/' : '/'
+			baseHref: process.env.NODE_ENV === 'production' ? '/cloudy/' : '/',
+			wiLocation: process.env.NODE_ENV === 'production' ? prodWeatherPath : devWeatherPath
 		})
 
 	],

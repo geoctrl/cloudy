@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <base href="<%= htmlWebpackPlugin.options.baseHref ? htmlWebpackPlugin.options.baseHref : '/' %>">
     <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700,900,700italic' rel='stylesheet' type='text/css'>
+    <link href="<%= htmlWebpackPlugin.options.wiLocation %>" rel="stylesheet">
+    <script src="https://use.fontawesome.com/b4b0b0cbc7.js"></script>
 </head>
 <body>
-<ui-view></ui-view>
+<div class="app">
+    <header></header>
+    <ui-view></ui-view>
+</div>
 </body>
 </html>

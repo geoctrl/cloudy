@@ -1,5 +1,5 @@
-import googleMaps from './googleMaps';
+import forecastSvc from './forecast-svc';
 
 export default function(app) {
-	app.service('googleMaps', googleMaps);
+	app.service('forecastSvc', forecastSvc);
 };

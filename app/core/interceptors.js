@@ -13,19 +13,22 @@ export default function(localStorageService) {
 		return config;
 	}
 
-	function interceptRes(res) {
+	function interceptResSuccess(res) {
+		return res
+	}
+
+	function interceptResError(res) {
 		if(api.isCall(res.config.url) && res.status === 401) {
 			// not logged in
-		} else {
-			return res;
 		}
+		return Promise.reject(res);
 	}
 
 	api.prod.interceptors.request.use(interceptReq);
-	api.prod.interceptors.response.use(null, interceptRes);
+	api.prod.interceptors.response.use(interceptResSuccess, interceptResError);
 
 	return {
 		request: interceptReq,
-		response: interceptRes
+		response: interceptResSuccess
 	};
 };

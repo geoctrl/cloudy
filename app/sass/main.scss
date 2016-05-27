@@ -6,7 +6,6 @@
 @import "partials/mixins";
 @import "partials/base";
 @import "partials/buttons";
-@import "partials/button-groups";
 @import "partials/type";
 @import "partials/list";
 @import "partials/page";
@@ -19,3 +18,10 @@
 
 // core
 @import "partials/grid";
+
+// components
+@import "components/header";
+@import "components/saved-places";
+
+// pages
+@import "pages/forecast";

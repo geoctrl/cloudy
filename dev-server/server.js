@@ -10,10 +10,20 @@ require('bogus-api').create({
 
   priorityRoutes: function(server) {
 
-    // ----- TEST
-    server.get('/rest/test', function(req, res) {
-      res.status(200).json(getResource('test'));
+    // ----- SEARCH
+    server.get('/v1/search.json', function(req, res) {
+      res.status(200).json(getResource('search'));
     });
+
+	  // ----- CURRENT
+	  server.get('/v1/current.json', function(req, res) {
+		  res.status(200).json(getResource('current'));
+	  });
+
+	  // ----- FORECAST
+	  server.get('/v1/forecast.json', function(req, res) {
+		  res.status(200).json(getResource('forecast'));
+	  });
 
   }
 }).start();

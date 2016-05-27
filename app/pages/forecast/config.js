@@ -1,7 +1,9 @@
 export default function($stateProvider) {
+	"ngInject";
+
 	$stateProvider.state('forecast', {
 		name: 'forecast',
-		url: '/forecast',
+		url: '/:location',
 		template: '<forecast></forecast>'
 	})
 };

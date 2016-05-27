@@ -2,7 +2,8 @@ import state from '../../core/state';
 
 export default function() {
 
-	let ctrl = function($scope, googleMaps) {
+	let ctrl = function($scope, forecastSvc) {
+		"ngInject";
 
 		let vm = this;
 		vm.state = new state($scope, vm);
@@ -10,35 +11,24 @@ export default function() {
 		vm.state.set({
 			component: 'loading' // loading | error | ready
 		});
-		
-		googleMaps.load().then(
-				res => {
-					vm.state.set({
-						component: 'ready'
-					});
-				}
-		);
 
-		vm.getCoords = function() {
-			googleMaps.getCoords('84660').then(
-					res => {
-						console.log(res);
-					}
-			);
-		};
+		function init() {
+			getForecasts();
+		}
 
+		function getForecasts() {
+			forecastSvc.getAllForecasts();
+		}
+
+		init();
 
 	};
-
-	let template = `
-		forecast
-		<button ng-click="forecast.getCoords()">hey</button>  
-	`;
-
+	
 	return {
 		restrict: 'E',
+		replace: true,
 		controller: ctrl,
 		controllerAs: 'forecast',
-		template: template
+		template: require('./forecast.html')
 	};
 }

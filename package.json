@@ -6,8 +6,8 @@
   "scripts": {
     "mock-api": "nodemon dev-server/server.js --watch dev-server",
     "start": "NODE_ENV=development webpack-dev-server --history-api-fallback --content-base app --inline --hot",
-    "build": "NODE_ENV=production webpack",
-    "deploy": ""
+    "build": "NODE_ENV=production webpack && cp -r app/sass/weather-icons dist/",
+    "deploy": "scp -r dist/* do.original:/var/www/tonylefler.com/public_html/cloudy"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
     "angular-ui-router": "^0.3.0",
     "axios": "^0.11.1",
     "es6-promise": "^3.2.1",
-    "google-maps": "^3.2.1",
+    "file-loader": "^0.8.5",
     "lodash": "^4.13.1",
     "path": "^0.12.7"
   },
