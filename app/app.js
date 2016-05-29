@@ -5,6 +5,9 @@ import './sass/main.scss';
 import angular from 'angular';
 import 'angular-local-storage';
 import 'angular-ui-router';
+import 'angular-moment';
+import 'moment';
+
 
 // polyfill the Promise global
 import Promise from 'es6-promise';
@@ -14,7 +17,8 @@ var app = angular.module('cloudy', [
 
   // vendor dependencies
   'LocalStorageModule',
-  'ui.router'
+  'ui.router',
+	'angularMoment'
 
 ]);
 

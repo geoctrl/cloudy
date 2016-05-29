@@ -1,0 +1,13 @@
+.app-loader {
+	position: relative;
+	float: left;
+	height: 70px;
+	margin-left: 40px;
+	opacity: 0;
+	transition: opacity 300ms ease;
+	@include loader($color-primary-500, 30px);
+
+	&.active {
+		opacity: .5;
+	}
+}

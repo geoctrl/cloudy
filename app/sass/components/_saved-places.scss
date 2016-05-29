@@ -1,29 +1,84 @@
 .saved-places {
 	flex-grow: 0;
+	width: 33%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.saved-places__box {
 	width: 300px;
-	overflow: auto;
 }
 
 .place {
 	border-radius: $border-radius-base;
 	padding: 10px;
-	border: solid 1px transparent;
+	border: solid 2px transparent;
 	cursor: pointer;
-	height: 80px;
+	height: 64px;
+	margin: 10px 0;
+	position: relative;
+	box-shadow: 0 1px 0 rgba(#000, 0);
+	transition:
+			border      200ms ease,
+			background  200ms ease,
+			box-shadow  200ms ease;
 
-	transition:	border 100ms ease;
+	&::after {
+		opacity: 0;
+		content: '';
+		position: absolute;
+		right: -12px;
+		top: 50%;
+		margin-top: -10px;
+		width: 0;
+		height: 0;
+		border-top: 10px solid transparent;
+		border-bottom: 10px solid transparent;
+		border-left: 10px solid #fff;
+		transition: opacity 200ms ease;
+	}
+
+	.place__temp {
+		color: $color-accent-100;
+		float: left;
+		line-height: 37px;
+		width: 60px;
+		text-align: center;
+		transition: color 200ms ease;
+
+		span {
+			font-size: 28px;
+			vertical-align: top;
+		}
+
+		i {
+			vertical-align: top;
+			font-size: 30px;
+			line-height: 40px;
+			margin-left: -4px;
+		}
+	}
 
 	.place__weather {
 		color: $color-accent-100;
-		font-size: 30px;
+		font-size: 32px;
+		margin-right: 14px;
 		float: left;
-		margin-right: 20px;
+		line-height: 37px;
+		width: 40px;
+		text-align: center;
+		transition: color 200ms ease;
 	}
 
 	.place__title {
-		font-size: 16px;
+		font-size: 14px;
 		font-weight: 700;
 		color: $color-accent-100;
+		margin-left: 124px;
+		line-height: 38px;
+		margin-right: 5px;
+		transition: color 200ms ease;
 	}
 
 	&:hover {
@@ -32,9 +87,14 @@
 
 	&.active {
 		background-color: #fff;
+		box-shadow: 0 1px 0 rgba(#000, .2);
 
-		.place__title {
-			color: $color-primary-500;
+		&::after {
+			opacity: 1;
+		}
+
+		.place__title, .place__temp, .place__weather {
+			color: $color-grey-300;
 		}
 	}
 }

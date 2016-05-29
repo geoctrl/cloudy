@@ -4,10 +4,11 @@ import _merge from 'lodash/merge';
 
 let SAVED_PLACES = 'cloudy.savedPlaces';
 
-export default function(localStorageService) {
+export default function($rootScope, localStorageService) {
 	"ngInject";
 
 	let savedPlaces = [],
+			activePlace = null,
 			cachedSavedPlaces = {
 				timestamp: null,
 				data: []
@@ -19,8 +20,11 @@ export default function(localStorageService) {
 	 * @returns {Promise}
 	 */
 	function getForecast(q) {
-		return api.mock.get(`/forecast.json`, {
-			params: { q: q }
+		return api.prod.get(`/forecast.json`, {
+			params: {
+				q: q,
+				days: 10
+			}
 		}).then(res => res.data);
 	}
 
@@ -33,12 +37,31 @@ export default function(localStorageService) {
 
 
 	return {
+		selectForecast(term) {
+			_forEach(savedPlaces, (place, i) => {
+				if (place.term == term) {
+					place.active = true;
+					cachedSavedPlaces.data[i].active = true;
+					activePlace = cachedSavedPlaces.data[i];
+				} else {
+					place.active = false;
+					cachedSavedPlaces.data[i].active = false;
+				}
+			});
+		},
+
+		selectedForecast() {
+			return activePlace;
+		},
 
 		/**
 		 * get saved places
 		 * 
 		 */
 		getAllForecasts() {
+			// start load
+			$rootScope.$broadcast('$appLoad');
+
 			// use cached places unless call is 1 hour old
 			if (cachedSavedPlaces.timestamp && (((Math.round(Date.now()/1000)))-cachedSavedPlaces.timestamp)<3600) {
 				return Promise.resolve(cachedSavedPlaces.data);
@@ -54,8 +77,16 @@ export default function(localStorageService) {
 						).then(
 								res => {
 									_forEach(res, (place, i) => {
+										if (!activePlace) {
+											savedPlaces[i].active = savedPlaces[i].favorite;
+										}
 										_merge(place, savedPlaces[i]);
 									});
+
+									activePlace = res.filter(place => {
+										return place.active;
+									})[0];
+
 									cachedSavedPlaces = {
 										data: res,
 										timestamp: Math.round(Date.now()/1000)

@@ -1,12 +1,12 @@
+import { icon } from '../core/weather-utils';
+import _isNumber from 'lodash/isNumber';
+
 export default function() {
-	return function(condition, isDay) {
-		if (condition) {
-			switch (condition) {
-				case 1003:
-					return isDay ? 'wi-day-cloudy' : 'wi-night-alt-cloudy';
-			}
+	return function(code, isDay) {
+		if (code && _isNumber(isDay)) {
+			return icon(code, isDay);
 		} else {
-			return condition;
+			return code;
 		}
 	}
 };

@@ -19,6 +19,8 @@ export default function() {
 					</span>
 				</div>
 				
+				<app-loader></app-loader>
+				
 				<ul class="header__nav">
 					<li ng-class="{active: header.state == 'forecast'}">
 						<a ui-sref="forecast({location: 'here'})">My Forecasts</a>
