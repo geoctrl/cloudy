@@ -58,6 +58,11 @@ export default function() {
 	
 	let template = `
 		<div class="saved-places">
+			<div class="saved-places__add">
+				<button>
+					<i class="fa fa-plus"></i> Add
+				</button>
+			</div>
 			<div class="saved-places__box">
 				<div class="place" ng-repeat="place in savedPlaces.state.data"
 						 ng-class="{active: place.active}"

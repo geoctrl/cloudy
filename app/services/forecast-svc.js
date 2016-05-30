@@ -20,7 +20,7 @@ export default function($rootScope, localStorageService) {
 	 * @returns {Promise}
 	 */
 	function getForecast(q) {
-		return api.prod.get(`/forecast.json`, {
+		return api.mock.get(`/forecast.json`, {
 			params: {
 				q: q,
 				days: 10

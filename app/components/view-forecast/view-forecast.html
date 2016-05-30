@@ -1,5 +1,13 @@
 <div class="view-forecast">
     <div class="vf">
+        <div class="vf-actions">
+            <button ng-class="{active: vf.state.data.favorite}">
+                <i class="fa fa-star"></i>
+            </button>
+            <button>
+                <i class="fa fa-trash"></i>
+            </button>
+        </div>
         <div class="vf-temp">
             <div class="vf-temp__icon">
                 <i class="wi {{vf.state.data.current.condition.code | wi: vf.state.data.current.is_day}}"></i>

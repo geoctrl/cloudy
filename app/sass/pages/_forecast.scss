@@ -8,5 +8,47 @@
 	display: flex;
 	align-items: stretch;
 	flex-direction: row;
-	padding: 40px;
+	padding: 0 40px;
+}
+
+
+@keyframes rotating {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+.rotating {
+	animation: rotating 2s linear infinite;
+}
+
+.message {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -30px 0 0 -100px;
+	color: #fff;
+	width: 200px;
+	opacity: 0;
+	transition: opacity 1000ms ease;
+
+	&.active {
+		opacity: 1
+	}
+}
+
+.message__icon {
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	font-size: 34px;
+	line-height: 40px;
+	margin: 0 auto;
+}
+
+.message__words {
+	text-align: center;
+	font-size: 18px;
 }

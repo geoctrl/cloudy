@@ -1,16 +1,23 @@
+import state from '../../core/state';
+
 export default function() {
 	
 	let ctrl = function($scope, forecastSvc) {
 		"ngInject";
 
 		let vm = this;
+		vm.state = new state($scope, vm);
 
 		function getForecasts() {
+			vm.state.set({
+				loader: true
+			});
 			vm.loader = true;
 			forecastSvc.getAllForecasts().then(
 					res => {
-						// stop loading
-						vm.loader = false;
+						vm.state.set({
+							loader: false
+						});
 					}
 			);
 		}
@@ -23,7 +30,7 @@ export default function() {
 	};
 	
 	let template = `
-		<div class="app-loader" ng-class="{active: appLoader.loader}"><div class="load"></div></div> 
+		<div class="app-loader" ng-class="{active: appLoader.state.loader}"><div class="load"></div></div> 
 	`;
 	
 	return {

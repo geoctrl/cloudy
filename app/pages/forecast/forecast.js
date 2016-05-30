@@ -17,7 +17,15 @@ export default function() {
 		}
 
 		function getForecasts() {
-			forecastSvc.getAllForecasts();
+			forecastSvc.getAllForecasts().then(
+					res => {
+						setTimeout(function() {
+							vm.state.set({
+								component: 'ready'
+							})
+						}, 1000);
+					}
+			);
 		}
 
 		init();
@@ -29,6 +37,19 @@ export default function() {
 		replace: true,
 		controller: ctrl,
 		controllerAs: 'forecast',
-		template: require('./forecast.html')
+		template: `
+			<div class="forecast__content">
+				<div class="message" ng-class="{active: forecast.state.component == 'loading'}">
+					<div class="message__icon rotating">
+						<i class="wi wi-day-sunny"></i>						
+					</div>
+					<div class="message__words">
+						Assembling your weather
+					</div>
+				</div>
+        <saved-places ng-class="{active: forecast.state.component == 'ready'}"></saved-places>
+        <view-forecast ng-class="{active: forecast.state.component == 'ready'}"></view-forecast>
+			</div>
+		`
 	};
 }
