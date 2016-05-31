@@ -5,7 +5,7 @@ let devApi = '/v1';
 let prodApi = 'http://api.apixu.com/v1';
 let responseType = 'json';
 
-let apixuKey = '9d3e385ed0aa47c6a8455150162705';
+let apixuKey = '239e4843d0f546359a1160835163105';
 
 module.exports.prod = axios.create({
 	baseURL: prodApi,

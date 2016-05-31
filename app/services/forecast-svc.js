@@ -20,7 +20,7 @@ export default function($rootScope, localStorageService) {
 	 * @returns {Promise}
 	 */
 	function getForecast(q) {
-		return api.mock.get(`/forecast.json`, {
+		return api.prod.get(`/forecast.json`, {
 			params: {
 				q: q,
 				days: 10
@@ -32,7 +32,18 @@ export default function($rootScope, localStorageService) {
 	 * get saved places
 	 */
 	function getSavedPlaces() {
-		return Promise.resolve(localStorageService.get(SAVED_PLACES));
+
+		return Promise.resolve([
+			{
+				term: '98101',
+				favorite: true
+			},
+			{
+				term: '92104',
+				favorite: false
+			}
+		]);
+		// return Promise.resolve(localStorageService.get(SAVED_PLACES));
 	}
 
 

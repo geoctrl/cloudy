@@ -1,90 +1,92 @@
 <div class="view-forecast">
     <div class="vf">
-        <div class="vf-actions">
-            <button ng-class="{active: vf.state.data.favorite}">
-                <i class="fa fa-star"></i>
-            </button>
-            <button>
-                <i class="fa fa-trash"></i>
-            </button>
-        </div>
-        <div class="vf-temp">
-            <div class="vf-temp__icon">
-                <i class="wi {{vf.state.data.current.condition.code | wi: vf.state.data.current.is_day}}"></i>
+        <div class="vf-container">
+            <div class="vf-actions">
+                <button ng-class="{active: vf.state.data.favorite}">
+                    <i class="fa fa-star"></i>
+                </button>
+                <button>
+                    <i class="fa fa-trash"></i>
+                </button>
             </div>
-            <div class="vf-temp__current">
-                {{vf.state.data.current.temp_f | number: 0}}<i class="wi wi-fahrenheit"></i>
-            </div>
-            <div class="vf-temp__text">
-                <div class="vf-temp__location ellipsis">
-                    {{vf.state.data.location.name}}, {{vf.state.data.location.region}}
+            <div class="vf-temp">
+                <div class="vf-temp__icon">
+                    <i class="wi {{vf.state.data.current.condition.code | wi: vf.state.data.current.is_day}}"></i>
                 </div>
-                <div class="vf-temp__condition ellipsis">
-                    {{vf.state.data.current.condition.code | wiCondition}}
+                <div class="vf-temp__current">
+                    {{vf.state.data.current.temp_f | number: 0}}<i class="wi wi-fahrenheit"></i>
+                </div>
+                <div class="vf-temp__text">
+                    <div class="vf-temp__location ellipsis">
+                        {{vf.state.data.location.name}}, {{vf.state.data.location.region}}
+                    </div>
+                    <div class="vf-temp__condition ellipsis">
+                        {{vf.state.data.current.condition.code | wiCondition}}
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="vf-stats">
-            <div class="vf-stats__item">
-                <div class="vf-pred">
-                    <div class="vf-pred__hi">
-                        {{vf.state.data.forecast.forecastday[0].day.maxtemp_f | number:0}}<i class="wi wi-degrees"></i>
+            <div class="vf-stats">
+                <div class="vf-stats__item">
+                    <div class="vf-pred">
+                        <div class="vf-pred__hi">
+                            {{vf.state.data.forecast.forecastday[0].day.maxtemp_f | number:0}}<i class="wi wi-degrees"></i>
+                        </div>
+                        <div class="vf-pred__lo">
+                            {{vf.state.data.forecast.forecastday[0].day.mintemp_f | number:0}}<i class="wi wi-degrees"></i>
+                        </div>
                     </div>
-                    <div class="vf-pred__lo">
-                        {{vf.state.data.forecast.forecastday[0].day.mintemp_f | number:0}}<i class="wi wi-degrees"></i>
+                </div>
+                <div class="vf-stats__item">
+                    <div class="vf-stats__item-title">
+                        Feels like
+                    </div>
+                    <div class="vf-stats__item-stat">
+                        {{vf.state.data.current.feelslike_f | number:0}}<i class="wi wi-degrees"></i>
                     </div>
                 </div>
-            </div>
-            <div class="vf-stats__item">
-                <div class="vf-stats__item-title">
-                    Feels like
+                <div class="vf-stats__item">
+                    <div class="vf-stats__item-title">
+                        Precipitation
+                    </div>
+                    <div class="vf-stats__item-stat">
+                        {{vf.state.data.current.precip_in}} in
+                    </div>
                 </div>
-                <div class="vf-stats__item-stat">
-                    {{vf.state.data.current.feelslike_f | number:0}}<i class="wi wi-degrees"></i>
+                <div class="vf-stats__item">
+                    <div class="vf-stats__item-title">
+                        Wind
+                    </div>
+                    <div class="vf-stats__item-stat">
+                        {{vf.state.data.current.wind_mph}} <span>mph</span>
+                    </div>
                 </div>
-            </div>
-            <div class="vf-stats__item">
-                <div class="vf-stats__item-title">
-                    Precipitation
-                </div>
-                <div class="vf-stats__item-stat">
-                    {{vf.state.data.current.precip_in}} in
-                </div>
-            </div>
-            <div class="vf-stats__item">
-                <div class="vf-stats__item-title">
-                    Wind
-                </div>
-                <div class="vf-stats__item-stat">
-                    {{vf.state.data.current.wind_mph}} <span>mph</span>
-                </div>
-            </div>
-            <div class="vf-stats__item">
-                <div class="vf-stats__item-title">
-                    Humidity
-                </div>
-                <div class="vf-stats__item-stat">
-                    {{vf.state.data.current.humidity}}%
+                <div class="vf-stats__item">
+                    <div class="vf-stats__item-title">
+                        Humidity
+                    </div>
+                    <div class="vf-stats__item-stat">
+                        {{vf.state.data.current.humidity}}%
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="forecast">
-        <div class="day" ng-repeat="day in vf.state.data.forecast.forecastday">
-            <div class="day__date">
-                {{day.date | abbrDay}}
-            </div>
-            <div class="day__icon">
-                <i class="wi {{day.day.condition.code | wi: 1}}"></i>
-            </div>
-            <div class="day__temp">
-                <div class="vf-pred">
-                    <div class="vf-pred__hi">
-                        {{day.day.maxtemp_f | number:0}}<i class="wi wi-degrees"></i>
-                    </div>
-                    <div class="vf-pred__lo">
-                        {{day.day.mintemp_f | number:0}}<i class="wi wi-degrees"></i>
+        <div class="forecast">
+            <div class="day" ng-repeat="day in vf.state.data.forecast.forecastday">
+                <div class="day__date">
+                    {{day.date | abbrDay}}
+                </div>
+                <div class="day__icon">
+                    <i class="wi {{day.day.condition.code | wi: 1}}"></i>
+                </div>
+                <div class="day__temp">
+                    <div class="vf-pred">
+                        <div class="vf-pred__hi">
+                            {{day.day.maxtemp_f | number:0}}<i class="wi wi-degrees"></i>
+                        </div>
+                        <div class="vf-pred__lo">
+                            {{day.day.mintemp_f | number:0}}<i class="wi wi-degrees"></i>
+                        </div>
                     </div>
                 </div>
             </div>

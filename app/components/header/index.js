@@ -1,6 +1,8 @@
 export default function() {
 
 	let ctrl = function($rootScope) {
+		"ngInject";
+		
 		let vm = this;
 		vm.state = null;
 		$rootScope.$on('$stateChangeSuccess', function(e, state) {

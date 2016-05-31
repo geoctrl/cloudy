@@ -4,6 +4,7 @@ import state from '../../core/state';
 export default function() {
 	
 	let ctrl = function($scope, forecastSvc) {
+		"ngInject";
 
 		let vm = this;
 		vm.state = new state($scope, vm);
