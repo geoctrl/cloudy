@@ -5,12 +5,7 @@
 	align-items: flex-start;
 	justify-content: center;
 	flex-direction: column;
-	opacity: 0;
 	transition: opacity 1000ms ease;
-
-	&.active {
-		opacity: 1;
-	}
 }
 
 .vf {
@@ -128,8 +123,8 @@
 	.vf-pred__hi {
 		position: absolute;
 		top: 10px;
-		right: 25px;
-		width: 25px;
+		right: 24px;
+		width: 26px;
 		text-align: right;
 	}
 

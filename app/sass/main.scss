@@ -24,6 +24,11 @@
 @import "components/saved-places";
 @import "components/app-loader";
 @import "components/view-forecast";
+@import "components/add-place";
 
 // pages
 @import "pages/forecast";
+@import "pages/getting-started";
+
+
+@import "../components/search-dropdown/search-dropdown";

@@ -1,18 +1,15 @@
 import * as api from '../core/api';
 import _forEach from 'lodash/forEach';
 import _merge from 'lodash/merge';
+import _isNull from 'lodash/isNull';
 
 let SAVED_PLACES = 'cloudy.savedPlaces';
 
 export default function($rootScope, localStorageService) {
 	"ngInject";
 
-	let savedPlaces = [],
-			activePlace = null,
-			cachedSavedPlaces = {
-				timestamp: null,
-				data: []
-			};
+	let forecasts = [],
+			savedPlaces = [];
 
 	/**
 	 * get forecast
@@ -32,80 +29,53 @@ export default function($rootScope, localStorageService) {
 	 * get saved places
 	 */
 	function getSavedPlaces() {
+		return Promise.resolve(localStorageService.get(SAVED_PLACES));
+	}
 
-		return Promise.resolve([
-			{
-				term: '98101',
-				favorite: true
-			},
-			{
-				term: '92104',
-				favorite: false
-			}
-		]);
-		// return Promise.resolve(localStorageService.get(SAVED_PLACES));
+	function genUid() {
+		return ("0000" + (Math.random()*Math.pow(36,4) << 0).toString(36)).slice(-4)
 	}
 
 
 	return {
-		selectForecast(term) {
-			_forEach(savedPlaces, (place, i) => {
-				if (place.term == term) {
-					place.active = true;
-					cachedSavedPlaces.data[i].active = true;
-					activePlace = cachedSavedPlaces.data[i];
-				} else {
-					place.active = false;
-					cachedSavedPlaces.data[i].active = false;
-				}
-			});
-		},
-
-		selectedForecast() {
-			return activePlace;
-		},
 
 		/**
-		 * get saved places
-		 * 
+		 * get and build forecasts
+		 * @returns promise
 		 */
-		getAllForecasts() {
-			// start load
-			$rootScope.$broadcast('$appLoad');
-
-			// use cached places unless call is 1 hour old
-			if (cachedSavedPlaces.timestamp && (((Math.round(Date.now()/1000)))-cachedSavedPlaces.timestamp)<3600) {
-				return Promise.resolve(cachedSavedPlaces.data);
-			} else {
-				return getSavedPlaces()
-						.then(
-								res => {
+		buildForecasts() {
+			return getSavedPlaces()
+					.then(
+							res => {
+								if (!_isNull(res) && res.length) {
 									savedPlaces = res;
 									return Promise.all(res.map(place => {
 										return getForecast(place.term);
 									}));
+								} else {
+									return Promise.resolve([]);
 								}
-						).then(
-								res => {
-									_forEach(res, (place, i) => {
-										if (!activePlace) {
-											savedPlaces[i].active = savedPlaces[i].favorite;
-										}
-										_merge(place, savedPlaces[i]);
-									});
+							}
+					).then(
+							res => {
+								// empty out forecasts
+								let newForecasts = res;
+								// create full object with response
+								_forEach(newForecasts, (place, i) => {
+									_merge(place, savedPlaces[i]);
+								});
+								forecasts = newForecasts;
+								return res;
+							}
+					);
+		},
 
-									activePlace = res.filter(place => {
-										return place.active;
-									})[0];
-
-									cachedSavedPlaces = {
-										data: res,
-										timestamp: Math.round(Date.now()/1000)
-									};
-									return res;
-								}
-						);
-			}
+		/**
+		 * get forecasts
+		 * @returns {Array}
+		 */
+		get() {
+			return forecasts;
 		},
 
 		/**
@@ -114,9 +84,20 @@ export default function($rootScope, localStorageService) {
 		 * @returns {Promise} list of possible locations
 		 */
 		getLocation(location) {
-			return api.mock.get(`/search.json`, {
+			return api.prod.get(`/search.json`, {
 				params: { q: location }
-			}).then(res => res.data);
+			});
+		},
+
+		addPlace(term, favorite) {
+			let newId = genUid();
+			savedPlaces.push({
+				term: term,
+				favorite: !!favorite,
+				id: newId
+			});
+			localStorageService.set(SAVED_PLACES, savedPlaces);
+			return newId;
 		}
 	};
 };

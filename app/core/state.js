@@ -29,7 +29,7 @@ export default class {
 				this.__controller.state[key] = val;
 			});
 			if (callback) {
-				callback();
+				callback(this.__controller.state);
 			}
 		});
 	};

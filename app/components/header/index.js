@@ -25,7 +25,7 @@ export default function() {
 				
 				<ul class="header__nav">
 					<li ng-class="{active: header.state == 'forecast'}">
-						<a ui-sref="forecast({location: 'here'})">My Forecasts</a>
+						<a>My Forecasts</a>
 					</li>
 					<li ng-class="{active: header.state == 'about'}">
 						<a>About</a>

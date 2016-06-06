@@ -5,12 +5,8 @@
 	flex-direction: column;
 	align-items: flex-end;
 	justify-content: center;
-	opacity: 0;
+	margin-bottom: 80px;
 	transition: opacity 1000ms ease;
-
-	&.active {
-		opacity: 1;
-	}
 }
 
 .saved-places__box {
@@ -26,6 +22,7 @@
 	margin: 10px 0;
 	position: relative;
 	box-shadow: 0 1px 0 rgba(#000, 0);
+	user-select: none;
 	transition:
 			border      200ms ease,
 			background  200ms ease,
@@ -102,31 +99,6 @@
 
 		.place__title, .place__temp, .place__weather {
 			color: $color-grey-300;
-		}
-	}
-}
-
-.saved-places__add {
-	width: 300px;
-	text-align: center;
-	margin-bottom: 4px;
-
-	button {
-		border-radius: 50px;
-		padding: 8px 14px;
-		border: solid 2px transparent;
-		background: none;
-		color: #fff;
-		font-weight: 700;
-		text-transform: uppercase;
-		transition: border 200ms ease;
-
-		i {
-			margin-right: 4px;
-		}
-
-		&:hover {
-			border-color: rgba(#fff, .5);
 		}
 	}
 }

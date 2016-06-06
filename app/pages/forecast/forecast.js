@@ -1,35 +1,37 @@
 import state from '../../core/state';
+import _find from 'lodash/find';
 
 export default function() {
 
-	let ctrl = function($scope, forecastSvc) {
+	let ctrl = function($scope, $state, $stateParams, forecastSvc) {
 		"ngInject";
 
 		let vm = this;
 		vm.state = new state($scope, vm);
-
-		vm.state.set({
-			component: 'loading' // loading | error | ready
-		});
-
-		function init() {
-			getForecasts();
-		}
-
-		function getForecasts() {
-			forecastSvc.getAllForecasts().then(
-					res => {
-						setTimeout(function() {
-							vm.state.set({
-								component: 'ready'
-							})
-						}, 1000);
+		
+		$scope.$watch(() => {
+			return forecastSvc.get();
+		}, forecasts => {
+			vm.state.set({
+				forecasts: forecasts,
+				selectedPlace: _find(forecasts, place => {
+					if ($stateParams.id) {
+						return place.id == $stateParams.id;
+					} else {
+						return place.favorite;
 					}
-			);
-		}
-
-		init();
-
+				})
+			});
+			if (!forecasts.length) {
+				$state.go('gettingStarted');
+			}
+		});
+		
+		vm.selectForecast = function(id) {
+			vm.state.set({
+				selectedPlace: _find(vm.state.forecasts, place => place.id == id)
+			})
+		};
 	};
 	
 	return {
@@ -39,16 +41,10 @@ export default function() {
 		controllerAs: 'forecast',
 		template: `
 			<div class="forecast__content">
-				<div class="message" ng-class="{active: forecast.state.component == 'loading'}">
-					<div class="message__icon rotating">
-						<i class="wi wi-day-sunny"></i>						
-					</div>
-					<div class="message__words">
-						Assembling your weather
-					</div>
-				</div>
-        <saved-places ng-class="{active: forecast.state.component == 'ready'}"></saved-places>
-        <view-forecast ng-class="{active: forecast.state.component == 'ready'}"></view-forecast>
+        <saved-places data="forecast.state.forecasts"
+                      selected="forecast.state.selectedPlace"
+                      select-forecast="forecast.selectForecast"></saved-places>
+        <view-forecast data="forecast.state.selectedPlace"></view-forecast>
 			</div>
 		`
 	};

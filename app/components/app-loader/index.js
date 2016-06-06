@@ -2,31 +2,23 @@ import state from '../../core/state';
 
 export default function() {
 	
-	let ctrl = function($scope, forecastSvc) {
+	let ctrl = function($scope) {
 		"ngInject";
 
 		let vm = this;
+		let count = 0;
 		vm.state = new state($scope, vm);
 
-		function getForecasts() {
-			vm.state.set({
-				loader: true
-			});
-			vm.loader = true;
-			forecastSvc.getAllForecasts().then(
-					res => {
-						vm.state.set({
-							loader: false
-						});
-					}
-			);
-		}
-
-		$scope.$on('$appLoad', function() {
-			if (!vm.loader) getForecasts();
+		vm.state.set({
+			loader: count > 0
 		});
 
-		getForecasts();
+		$scope.$on('$appLoad', function(e, status) {
+			count = status ? count+1 : count-1;
+			vm.state.set({
+				loader: count > 0
+			});
+		});
 	};
 	
 	let template = `

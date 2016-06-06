@@ -1,72 +1,43 @@
 import state from '../../core/state';
-import _forEach from 'lodash/forEach';
-import _cloneDeep from 'lodash/cloneDeep';
+import _findIndex from 'lodash/findIndex';
 
 export default function() {
-	let ctrl = function($scope, forecastSvc) {
+	let ctrl = function($scope, forecastSvc, $stateParams) {
 		"ngInject";
 
 		let vm = this;
-
 		vm.state = new state($scope, vm);
-		vm.state.set({
-			component: 'loading', // loading | hasData | noData | error
-			data: []
+
+		$scope.$watch(() => {
+			return vm.data;
+		}, data => {
+			vm.state.set({
+				data: data,
+				selectedIndex: _findIndex(forecastSvc.get(), place => {
+					if ($stateParams.id) {
+						return place.id == $stateParams.id;
+					} else {
+						return place.favorite;
+					}
+				})
+			});
 		});
 
-		function init() {
-			getForecasts();
-		}
-
-		function getForecasts() {
-			forecastSvc.getAllForecasts().then(
-					res => {
-						console.log(res);
-						vm.state.set({
-							data: res
-						});
-					}
-			);
-		}
-
-		function selectForecast(term) {
-			let change = true;
-			let updatePlaces = _cloneDeep(vm.state.data);
-			_forEach(updatePlaces, place => {
-				if (term == place.term && place.active && change) {
-					change = false;
-				} else if (term == place.term && !place.active && change) {
-					place.active = change = true;
-				} else if (term != place.term && change) {
-					place.active = false;
-				}
-			});
+		vm.select = function(id) {
 			vm.state.set({
-				data: updatePlaces
+				selectedIndex: _findIndex(forecastSvc.get(), place => place.id == id)
 			});
-			return change;
-		}
-
-		vm.selectForecast = function(placeTerm) {
-			if (selectForecast(placeTerm)) {
-				forecastSvc.selectForecast(placeTerm);
-			}
+			vm.selectForecast()(id);
 		};
-
-		init();
 	};
 	
 	let template = `
 		<div class="saved-places">
-			<div class="saved-places__add">
-				<button>
-					<i class="fa fa-plus"></i> Add
-				</button>
-			</div>
+			<add-place></add-place>
 			<div class="saved-places__box">
-				<div class="place" ng-repeat="place in savedPlaces.state.data"
-						 ng-class="{active: place.active}"
-						 ng-click="savedPlaces.selectForecast(place.term)">
+				<div class="place" ng-repeat="place in savedPlaces.data track by $index"
+						 ng-class="{active: $index == savedPlaces.state.selectedIndex}"
+						 ng-click="savedPlaces.select(place.id)">
 					<div class="place__weather">
 						<i class="wi {{place.current.condition.code | wi: place.current.is_day}}"></i>
 					</div>
@@ -87,8 +58,14 @@ export default function() {
 	return {
 		restrict: 'E',
 		replace: true,
+		scope: {
+			data: '=',
+			selectForecast: '&',
+			selected: '='
+		},
 		controller: ctrl,
 		controllerAs: 'savedPlaces',
+		bindToController: true,
 		template: template
 	};
 };

@@ -1,11 +1,12 @@
 import * as api from './api';
 
-export default function(localStorageService) {
+export default function(localStorageService, $rootScope) {
 	"ngInject";
 
 	let authToken = 'auth.token';
 
 	function interceptReq(config) {
+		$rootScope.$broadcast('$appLoad', true);
 		if(api.isCall(config.url) && localStorageService.get(authToken)) {
 			// force auth token
 			// config.headers['authorization'] = localStorageService.get(authToken);
@@ -14,6 +15,7 @@ export default function(localStorageService) {
 	}
 
 	function interceptResSuccess(res) {
+		$rootScope.$broadcast('$appLoad', false);
 		return res
 	}
 
