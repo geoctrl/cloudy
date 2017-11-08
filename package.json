@@ -1,52 +1,44 @@
 {
   "name": "cloudy",
   "version": "0.0.1",
-  "description": "",
-  "main": "dist/bundle.js",
+  "description": "Simple Weather App based on your location.",
+  "main": "webpack.config.js",
   "scripts": {
-    "mock-api": "nodemon dev-server/server.js --watch dev-server",
-    "start": "NODE_ENV=development webpack-dev-server --history-api-fallback --content-base app --inline --hot",
-    "build": "NODE_ENV=production webpack && cp -r app/sass/weather-icons dist/",
-    "deploy": "scp -r dist/* do.original:/var/www/tonylefler.com/public_html/cloudy"
+    "start": "webpack-dev-server --history-api-fallback --progress --inline --watch",
+    "build": "npx rimraf dist && webpack",
+    "deploy": "scp -r dist/* do.original:/var/www/tonylefler.com/public/cloudy/",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git+https://github.com/geoctrl/cloudy.git"
   },
-  "author": "",
-  "license": "copyright",
+  "author": "@geoctrl",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/geoctrl/cloudy/issues"
+  },
+  "homepage": "https://github.com/geoctrl/cloudy#readme",
   "dependencies": {
-    "angular": "^1.5.5",
-    "angular-local-storage": "^0.2.7",
-    "angular-moment": "^1.0.0-beta.6",
-    "angular-ui-router": "^0.3.0",
-    "axios": "^0.11.1",
-    "es6-promise": "^3.2.1",
-    "file-loader": "^0.8.5",
-    "lodash": "^4.13.1",
-    "moment": "^2.13.0",
-    "path": "^0.12.7",
-    "velocity-animate": "^1.2.3"
+    "axios": "^0.17.0",
+    "vue": "^2.5.3"
   },
   "devDependencies": {
-    "autoprefixer": "^6.3.6",
-    "babel-core": "^6.9.0",
-    "babel-loader": "^6.2.4",
-    "babel-preset-es2015": "^6.9.0",
-    "bogus-api": "^1.0.0",
-    "css-loader": "^0.23.1",
-    "expose-loader": "^0.7.1",
-    "extract-text-webpack-plugin": "^1.0.1",
-    "html-webpack-plugin": "^2.17.0",
-    "ng-annotate-loader": "^0.1.0",
-    "node-sass": "^3.7.0",
-    "postcss-loader": "^0.9.1",
-    "raw-loader": "^0.5.1",
-    "sass-loader": "^3.2.0",
-    "script-loader": "^0.7.0",
-    "style-loader": "^0.13.1",
-    "svg-inline-loader": "^0.4.1",
-    "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1"
+    "autoprefixer": "^7.1.6",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "css-loader": "^0.28.7",
+    "file-loader": "^1.1.5",
+    "html-webpack-plugin": "^2.30.1",
+    "node-sass": "^4.5.3",
+    "postcss-loader": "^2.0.8",
+    "rimraf": "^2.6.2",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.19.0",
+    "svg-inline-loader": "^0.8.0",
+    "uglifyjs-webpack-plugin": "^1.0.1",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.3"
   }
 }
