@@ -99,7 +99,7 @@ module.exports = function() {
     historyApiFallback: {
       index: 'src/index.html'
     },
-    port: 8080
+    port: 8888
   };
 
   return config;

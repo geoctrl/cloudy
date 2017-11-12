@@ -1,4 +1,9 @@
-export default {
+
+export function weatherIcon(code, isDay) {
+  return weatherMap[code][isDay ? 'day' : 'night'];
+}
+
+const weatherMap = {
 
   // sunny
   1000: {

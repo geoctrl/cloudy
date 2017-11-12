@@ -1,0 +1,80 @@
+.forecast {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  font-weight: 700;
+  padding: 100px 0;
+}
+
+.forecast__location {
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+.forecast__date {
+  font-size: 12px;
+  margin-bottom: 20px;
+}
+
+.forecast-current__icon svg.icon {
+  width: 80px;
+}
+
+.forecast-current__group {
+  margin-top: -4px;
+}
+
+.forecast-temp {
+  text-align: left;
+  display: inline-block;
+  vertical-align: top;
+
+  .forecast-temp__main {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 44px;
+  }
+
+  .forecast-temp__degree {
+    display: inline-block;
+    vertical-align: super;
+
+  }
+
+  .forecast-temp__high-low {
+    font-size: 12px;
+    margin-left: 3px;
+    margin-top: -6px;
+  }
+}
+
+.forecast-details {
+  text-align: left;
+  display: inline-block;
+  margin-left: 18px;
+  vertical-align: top;
+  padding-top: 12px;
+
+  .forecast-details__condition {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .forecast-details__set {
+    display: inline-block;
+    font-size: 12px;
+    margin-right: 6px;
+
+    span {
+      display: block;
+      font-size: 10px;
+    }
+  }
+
+  > div > .forecast-details__set:last-child {
+    margin-right: 0;
+  }
+}
