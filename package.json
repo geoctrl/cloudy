@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --history-api-fallback --progress --inline --watch",
     "build": "npx rimraf dist && webpack && cp -r src/assets dist/ && cp src/manifest.json dist/",
-    "deploy": "scp -r dist/* do.original:/var/www/tonylefler.com/public/cloudy/",
+    "deploy": "scp -r dist/* do.original:/var/www/cloudy/public/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -3,7 +3,7 @@ import Vue from 'vue';
 import './styles/main.scss';
 import * as components from './components';
 import { svgSymbols } from './components/icons/svg-symbols';
-import { buildForecasts } from './core/forecast.service';
+import { buildForecasts } from './services/forecast.service';
 
 new Vue({
   el: '#app',
@@ -11,6 +11,7 @@ new Vue({
   template:
 `<div class="app-container">
     ${svgSymbols}
+    <cloudy-header></cloudy-header>
     <vue-glide :count="forecasts.length">
         <forecast v-for="(forecast, i) in forecasts"
                   :key="i"
@@ -18,6 +19,7 @@ new Vue({
                   :forecast="forecast"
                   :style="{transform: 'translateX('+(i*width)+'px)'}">
         </forecast>
+        <div :style=""></div>
     </vue-glide>
 </div>`,
 

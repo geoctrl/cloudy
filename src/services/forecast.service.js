@@ -1,17 +1,17 @@
-import { weatherApi } from './api';
+import { weatherApi } from '../core/api';
 
 
 const localKey = 'CLOUDY.SAVED_PLACES';
-// localStorage.setItem(localKey, JSON.stringify([
-//   {
-//     id: genUid(),
-//     term: 'Provo, Utah, United States of America'
-//   },
-//   {
-//     id: genUid()+'4',
-//     term: 'San Francisco, California, United States of America'
-//   }
-// ]));
+localStorage.setItem(localKey, JSON.stringify([
+  {
+    id: genUid(),
+    term: 'Provo, Utah, United States of America'
+  },
+  {
+    id: genUid()+'4',
+    term: 'San Francisco, California, United States of America'
+  }
+]));
 let savedPlaces = getPlaces();
 export let forecasts = [];
 

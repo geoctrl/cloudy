@@ -4,6 +4,10 @@ import Velocity from 'velocity-animate';
 
 import './vue-glide.scss';
 
+let swipeType = '';
+let easing = 'easeOutQuart';
+let duration = 400;
+
 export default Vue.component('vueGlide', {
   props: ['count'],
   template:
@@ -14,7 +18,6 @@ export default Vue.component('vueGlide', {
   data() {
     return {
       index: 0,
-      swipe: false,
       animationSpeed: '',
       offset: document.body.clientWidth,
       direction: ''
@@ -26,38 +29,29 @@ export default Vue.component('vueGlide', {
 
     window.addEventListener('resize', this.resize);
 
-    el.on('swipeleft swiperight', e => {
-      let prevPosition = this.position;
-      if (e.type === 'swipeleft') {
-        if (this.index < this.count-1) {
-          this.index++;
-          Velocity(this.$el, {
-            translateX: [this.position, prevPosition]
-          }, { easing: 'easeOutQuart' })
+    el.on('swipeleft swiperight panleft panright panend panup pandown', e => {
+
+      // swipe animation if there's a swipe event
+      // or if the user stops panning more then half way through
+      if (e.type === 'panend') {
+        if (swipeType) {
+          this.swipe(e);
+        } else if (Math.abs(e.deltaX) > (Math.abs(this.offset/2))) {
+          swipeType = e.deltaX > 0 ? 'swiperight' : 'swipeleft';
+          this.swipe(e)
         } else {
-          this.index = 0;
-          Velocity(this.$el, {
-            translateX: [prevPosition-this.offset, prevPosition]
-          }, { easing: 'easeOutQuart' });
-          Velocity(this.$el, {
-            translateX: [0, this.offset]
-          }, { easing: 'easeOutQuart' });
+          this.reset(e);
         }
-      } else {
-        if (this.index > 0) {
-          this.index--;
-          Velocity(this.$el, {
-            translateX: [this.position, prevPosition]
-          }, { easing: 'easeOutQuart' });
-        } else {
-          this.index = this.count-1;
-          Velocity(this.$el, {
-            translateX: [prevPosition+this.offset, prevPosition]
-          }, { easing: 'easeOutQuart' });
-          Velocity(this.$el, {
-            translateX: [this.position, this.position-this.offset]
-          }, { easing: 'easeOutQuart' });
-        }
+      }
+
+      // update window movement
+      if (e.type === 'panleft' || e.type === 'panright') {
+        this.$el.style.transform = `translateX(${(this.index*this.position) + e.deltaX}px)`
+      }
+
+      // catch swipe events
+      if (e.type === 'swipeleft' || e.type === 'swiperight') {
+        swipeType = e.type;
       }
     });
   },
@@ -77,6 +71,53 @@ export default Vue.component('vueGlide', {
       this.offset = document.body.clientWidth;
       Velocity(this.$el, {
         translateX: this.position
+      });
+    },
+
+    swipe(e) {
+      let prevPosition = this.position;
+      if (swipeType === 'swipeleft') {
+        if (this.index < this.count-1) {
+          this.index++;
+          Velocity(this.$el, 'stop');
+          Velocity(this.$el, {
+            translateX: [this.position, prevPosition+e.deltaX]
+          }, { easing, duration })
+        } else {
+          this.index = 0;
+          Velocity(this.$el, 'stop');
+          Velocity(this.$el, {
+            translateX: [prevPosition-this.offset, prevPosition+e.deltaX]
+          }, { easing, duration });
+          Velocity(this.$el, {
+            translateX: [0, this.offset]
+          }, { easing, duration });
+        }
+      } else {
+        if (this.index > 0) {
+          this.index--;
+          Velocity(this.$el, 'stop');
+          Velocity(this.$el, {
+            translateX: [this.position, prevPosition+e.deltaX]
+          }, { easing, duration });
+        } else {
+          this.index = this.count-1;
+          Velocity(this.$el, 'stop');
+          Velocity(this.$el, {
+            translateX: [(prevPosition*this.index)+this.offset, prevPosition+e.deltaX]
+          }, { easing, duration });
+          Velocity(this.$el, {
+            translateX: [this.position, this.position-this.offset]
+          }, { easing, duration });
+        }
+      }
+      swipeType = '';
+    },
+
+    reset(e) {
+      Velocity(this.$el, 'stop');
+      Velocity(this.$el, {
+        translateX: [this.position, this.position+e.deltaX]
       });
     }
   }
